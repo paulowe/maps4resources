@@ -15,7 +15,7 @@ A Flask application for displaying location-based resources on a map.
 ##### Clone the repo
 
 ```
-$ git clone https://github.com/paulowe/maps4all.git
+$ git clone https://github.com/paulowe/maps4resources.git
 $ cd maps4all
 ```
 
