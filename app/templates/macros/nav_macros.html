@@ -1,0 +1,252 @@
+{% macro render_menu_items(endpoints) %}
+    {% for endpoint, name, icon in endpoints %}
+        <a class="item {% if request.endpoint == endpoint %}active{% endif %}" href="{{ url_for(endpoint) }}">
+            {% if icon %}
+                <i class="{{ icon }} icon"></i>
+            {% endif %}
+            {{ name | safe }}
+        </a>
+    {% endfor %}
+{% endmacro %}
+
+{% macro header_items(current_user, site_name) %}
+    <a class="header item" href="{{ url_for('main.index') }}">{{ site_name }}</a>
+    {% if current_user.is_authenticated %}
+        {% set href = url_for('admin.index') %}
+        <a class="item" href="{{ href }}">{{ current_user.role.name }} Dashboard</a>
+    {% else %}
+        <a class="item nav-mobile-switch" id="nav-to-map">
+          <i class="world icon"></i>
+          <p>Show Map</p>
+        </a>
+        <a class="item nav-mobile-switch" id="nav-to-list">
+          <i class="list icon"></i>
+          <p>Show List</p>
+        </a>
+    {% endif %}
+{% endmacro %}
+
+{% macro dropdown_choice(title, endpoint, icon=None, id="") %}
+    <a id="{{ id }}" class="item" href="{{ url_for(endpoint) }}">
+        {% if icon is not none %}
+            <i class="{{ icon }}"></i>
+        {% endif %}
+        {{ title }}
+    </a>
+{% endmacro %}
+
+{% macro page_dropdown_choice(title, page, icon=None, id="") %}
+    <a id="{{ id }}" class="item" href="{{ url_for('main.render_page', pageName=page) }}">
+        {% if icon is not none %}
+            <i class="{{ icon }}"></i>
+        {% endif %}
+        {{ title }}
+    </a>
+{% endmacro %}
+
+{% macro account_items(current_user) %}
+    <a href="{{ url_for('contact.index') }}" class="item">Contact Us</a>
+    <div class="ui simple dropdown item" id="nav-contact-dropdown">
+        Pages
+        <i class="dropdown icon"></i>
+            <div class="menu">
+                {% for p in 'yes' | pages %}
+                  {% if p.page_name != 'Contact' %}
+                      {{ page_dropdown_choice(p.page_name, p.editor_name, icon='book icon') }}
+                  {% endif %}
+                {% endfor %}
+            </div>
+    </div>
+    {% if current_user.is_authenticated %}
+        <div class="ui simple dropdown item" id="nav-resources-dropdown">
+            Manage Resources
+            <i class="dropdown icon"></i>
+            <div class="menu">
+                <h3 class="ui header">Resources</h3>
+                {{ dropdown_choice('All Resources', 'single_resource.index',
+                                    icon='book icon') }}
+                {{ dropdown_choice('Add New Resource', 'single_resource.create',
+                                    icon='add circle icon') }}
+
+                {% if current_user.is_admin() %}
+                    {{ dropdown_choice('Suggested Resources', 'suggestion.index',
+                                        icon='checkmark box icon', id='suggested-resources') }}
+                    {{ dropdown_choice('View Ratings/Reviews', 'admin.ratings_table',
+                                        icon='star icon') }}
+                {% endif %}
+                <div class="ui section divider"></div>
+                <h3 class="ui header">Descriptors</h3>
+                {{ dropdown_choice('All Descriptors', 'descriptor.index',
+                                    icon='tags icon') }}
+                {{ dropdown_choice('Add New Descriptor', 'descriptor.new_descriptor',
+                                    icon='add circle icon') }}
+                {% if current_user.is_admin() %}
+                    {{ dropdown_choice('Change Required Option Descriptor',
+                                        'descriptor.change_required_option_descriptor',
+                                        icon='configure icon') }}
+                {% endif %}
+                <div class="ui section divider"></div>
+                <h3 class="ui header">Bulk</h3>
+                {{ dropdown_choice('Upload Resources', 'bulk_resource.upload',
+                                    icon='upload icon') }}
+                <div class="ui section divider"></div>
+                <h3 class="ui header">Info</h3>
+                {{ dropdown_choice('App Overview', 'main.overview',
+                                    icon='help circle icon') }}
+            </div>
+        </div>
+        <a href="{{ url_for('account.manage') }}" class="item">Your Account</a>
+        <a href="{{ url_for('account.logout') }}" class="item">Log out</a>
+    {% else %}
+        <a href="{{ url_for('suggestion.suggest') }}" class="item">Suggest Resource</a>
+        <a href="{{ url_for('account.login') }}" class="item">Log in</a>
+    {% endif %}
+
+    {% if current_user.is_authenticated %}
+      <script>
+        // Generates the icon for unread suggested resources
+        $.get('/suggestion/unread', function (data) {
+            var numUnread = data;
+            if (parseInt(numUnread) > 0) {
+                var icon = document.createElement("i");
+                $(icon).addClass('ui red label').html(numUnread);
+                $("#suggested-resources i").replaceWith(icon);
+            }
+        });
+      </script>
+    {% endif %}
+{% endmacro %}
+
+{% macro mobile_account_items(current_user) %}
+    <a href="{{ url_for('contact.index') }}" class="item">Contact Us</a>
+    {% if ('yes' | pages)|length > 0 %}
+        <div class = "item">Pages </div>
+        <div class="menu">
+            {% for p in 'yes' | pages %}
+              {% if p.page_name != 'Contact' %}
+
+                  <a id="" class="item" href="{{ url_for('main.render_page', pageName=p.editor_name) }}">
+                      {{ p.page_name }}
+                  </a>
+              {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% if current_user.is_authenticated %}
+        <div class="item"> Manage</div>
+        <div class="menu">
+            <div class="ui test container">
+                <div class="right menu">
+                    <div class = "ui simple dropdown item">
+                        Resources
+                        <i class="dropdown icon"></i>
+                        <div class="menu">
+                            {{ dropdown_choice('All Resources', 'single_resource.index',
+                                                icon='book icon') }}
+                            {{ dropdown_choice('Add New Resource', 'single_resource.create',
+                                                icon='add circle icon') }}
+                            {{ dropdown_choice('Suggested Resources', 'suggestion.index',
+                                                icon='checkmark box icon', id='suggested-resources') }}
+                            {{ dropdown_choice('View Ratings/Reviews', 'admin.ratings_table',
+                                                icon='star icon') }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui test container">
+                <div class="right menu">
+                    <div class = "ui simple dropdown item">
+                        Descriptors
+                        <i class="dropdown icon"></i>
+                        <div class="menu">
+                            {{ dropdown_choice('All Descriptors', 'descriptor.index',
+                                    icon='tags icon') }}
+                            {{ dropdown_choice('Add New Descriptor', 'descriptor.new_descriptor',
+                                    icon='add circle icon') }}
+                            {{ dropdown_choice('Change Required Option Descriptor',
+                                    'descriptor.change_required_option_descriptor',
+                                    icon='configure icon') }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{ dropdown_choice('Upload Resources', 'bulk_resource.upload',
+                                    icon=None) }}
+            {{ dropdown_choice('App Overview', 'main.overview',
+                                    icon=None) }}
+        </div>
+        <a href="{{ url_for('account.manage') }}" class="item">Your Account</a>
+        <a href="{{ url_for('account.logout') }}" class="item">Log out</a>
+    {% else %}
+        <a href="{{ url_for('suggestion.suggest') }}" class="item">Suggest Resource</a>
+        <a href="{{ url_for('account.login') }}" class="item">Log in</a>
+    {% endif %}
+
+    {% if current_user.is_authenticated %}
+      <script>
+        // Generates the icon for unread suggested resources
+        $.get('/suggestion/unread', function (data) {
+            var numUnread = data;
+            if (parseInt(numUnread) > 0) {
+                var icon = document.createElement("i");
+                $(icon).addClass('ui red label').html(numUnread);
+                $("#suggested-resources i").replaceWith(icon);
+            }
+        });
+      </script>
+    {% endif %}
+{% endmacro %}
+
+{% macro mobile_nav(current_user, site_name, endpoints=None) %}
+    <div class="mobile only row">
+        <div class="ui fixed inverted black main menu">
+            {{ header_items(current_user, site_name) }}
+            <div class="right menu">
+                <a class="icon item" id="open-nav"><i class="sidebar icon"></i></a>
+            </div>
+        </div>
+
+        {# The menu items which will be shown when open-nav is clicked #}
+        <div class="ui fixed vertical fluid menu">
+            {% if endpoints %}
+                {{ render_menu_items(endpoints) }}
+            {% endif %}
+            {{ mobile_account_items(current_user) }}
+        </div>
+    </div>
+{% endmacro %}
+
+{# If `count` and `endpoints` are specified, the endpoints will be put into a
+ # secondary menu. `count` should be the string (e.g. 'four') number of endpoints. #}
+{% macro desktop_nav(current_user, site_name, logo, endpoints=None, count=None) %}
+    <div class="computer tablet only row">
+        <div class="ui fixed inverted black main menu">
+            <div class="ui container">
+                <a class="header item" href="/" id="nav-header-logo">
+                    <img src="{{ logo }}">
+                </a>
+                {{ header_items(current_user, site_name) }}
+                <div class="right menu">
+                    {{ account_items(current_user) }}
+  
+                </div>
+            </div>
+        </div>
+
+        {# Endpoints go into a submenu #}
+        {% if endpoints %}
+            <div class="ui fixed {{ count + ' item' }} labeled icon fluid stackable sub menu">
+                <div class="ui stackable container">
+                    {{ render_menu_items(endpoints) }}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{% macro render_nav(current_user, site_name, logo, count, endpoints) %}
+    <nav class="ui navigation grid {% if endpoints %}has-submenu{% endif %}">
+        {{ mobile_nav(current_user, site_name, endpoints=endpoints) }}
+        {{ desktop_nav(current_user, site_name, logo, endpoints=endpoints, count=count) }}
+    </nav>
+{% endmacro %}

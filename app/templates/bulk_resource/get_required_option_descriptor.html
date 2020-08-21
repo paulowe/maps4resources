@@ -1,0 +1,57 @@
+{% extends 'layouts/base.html' %}
+{% import 'macros/form_macros.html' as f %}
+
+{% block content %}
+    <div class="ui stackable centered grid container">
+        <div class="twelve wide column">
+            <div class="ui fluid steps">
+                <div class="completed step">
+                    <i class="truck icon"></i>
+                    <div class="content">
+                        <div class="title">Upload</div>
+                        <div class="description">Upload your CSV file</div>
+                    </div>
+                </div>
+                <div class="completed step">
+                    <i class="configure icon"></i>
+                    <div class="content">
+                        <div class="title">Configure</div>
+                        <div class="description">Review your data</div>
+                    </div>
+                </div>
+                <div class="active step">
+                    <i class="save icon"></i>
+                    <div class="content">
+                        <div class="title">Save</div>
+                        <div class="description">Add your data</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="twelve wide column">
+            <h2 class="ui header">
+                CSV Upload Workflow
+            </h2>
+        </div>
+        <div class="twelve wide column">
+          <h4 class="ui header">
+            Set Required Option Descriptor
+            <div class="sub header">
+              Select one of the following option descriptors to be the required option descriptor.
+              Required option descriptor denotes an option descriptor that every resource
+              needs to have a value for and will be the primary filter in search.
+              You can only choose from the option descriptors in the current CSV and the
+              current required option descriptor (if any). You cannot choose from
+              removed descriptors.
+              {% if current %}
+                <p>The current required option descriptor is: <b>{{ current }}</b></p>
+              {% endif %}
+            </div>
+          </h4>
+        </div>
+        <div class="twelve wide column">
+            {{ f.render_form(form) }}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% import 'macros/page_macros.html' as page %}
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+  <div class="static-page">
+    <div class="ui text container">
+        <h1 class="ui header">
+        	About
+        	{% if current_user.is_admin() %}
+        		<div class="sub header">This is what the user will see on the About page</div>
+        	{% endif %}
+        </h1>
+        {{ page.render_inline_editor(editable_html_obj, current_user) }}
+    </div>
+
+    {% if not current_user.is_admin() %}
+    <div class="ui text container">
+      <a class="header item" id="h4i-full-logo" target="_blank" href="https://www.paulowe.com">
+        <img src="{{ url_for('static', filename='images/oer.png') }}">
+      </a>
+    </div>
+    {% endif %}
+  </div>
+  <script src="{{ url_for('static', filename='ckeditor/ckeditor.js') }}"></script>
+{% endblock %}

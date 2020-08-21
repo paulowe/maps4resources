@@ -1,0 +1,107 @@
+{% extends 'layouts/base.html' %}
+{% import 'macros/form_macros.html' as f %}
+
+{% block content %}
+    <div class="ui stackable centered grid container">
+        <div class="twelve wide column">
+            <h2 class="ui header">
+                Upload Resources by CSV
+            </h2>
+            <p>
+              You can easily upload multiple resources at once by writing your
+              resource descriptions to any spreadsheet program, such as
+              Microsoft Excel or Google Sheets, and exporting it as a CSV file,
+              which has a .csv file extension. Download the CSV template below for
+              properly formatted columns headers.
+
+              <form action="{{ url_for('bulk_resource.download_template') }}" method="post">
+                  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                  <button class="ui button">Download Template</button>
+              </form>
+            </p>
+            <p>
+                {% if current_user.is_admin() %}
+                    <h4 class="ui header"> Reset </h4>
+                    The "Reset" mode clears all data in the database
+                    and sets up a new schema based on the contents of the CSV. All resources must have a name under the 'Name' column and an address that can be converted by Google Maps into latitude/longitude under the 'Address' column.
+                {% endif %}
+
+                <h4 class="ui header"> Update </h4>
+                The "Update" model only adds new resources or updates existing
+                resources. All resources must have a name under the 'Name' column and an address that can be converted by Google Maps into latitude/longitude under the 'Address' column.<br>
+                <div class="ui bulleted list">
+                  <div class="ui item">
+                    If a resource in the CSV has the same name ('Name' column in the CSV) as
+                    a resource in the app, they are assumed to be the same resource.
+                    Then, the data of the resource in the app will be replaced with
+                    the data in the CSV. So determining if two resources are the same or not is based on
+                    their name. <b>Note: resources must have unique names then.</b>
+                  </div>
+                  <div class="ui item">
+                    Resources that are in the app but not in the CSV <b>will not</b> be
+                    removed.
+                  </div>
+                  <div class="ui item">
+                    Descriptors that are in the app but not in the CSV <b>will be</b>
+                    removed.
+                  </div>
+                  <div class="ui item">
+                    Use semicolons to separate different option descriptor values.
+                    <br />
+                    <span style="color: #2F6530">Correct:</span> Option 1; Option 2; Option 3
+                    <br />
+                    <span style="color: #8F2E2E">Incorrect:</span> Option 1, Option 2, Option 3
+                  </div>
+                </div>
+            </p>
+            <div class="ui divider"></div>
+            <form id="csv-upload-form" class="ui form">
+                <div class="field">
+                    <label for="csv">CSV File (only .csv files accepted)</label>
+                    <!-- only allow .csv file types -->
+                    <input id="csv-file" name="csv" placeholder="CSV File" type="file" accept=".csv">
+                </div>
+                <div class="inline fields">
+                  <div class="field">
+                    <div class="ui radio checkbox">
+                      <input type="radio" id="update" name="reset-or-update" checked="" tabindex="0" class="hidden">
+                      <label>Update</label>
+                    </div>
+                  </div>
+                  {% if current_user.is_admin() %}
+                    <div class="field">
+                      <div class="ui radio checkbox">
+                        <input type="radio" id="reset" name="reset-or-update" tabindex="0" class="hidden">
+                        <label>Reset</label>
+                      </div>
+                    </div>
+                  {% endif %}
+                </div>
+                <button class="ui disabled button" type="submit" id="upload-button">Upload</button>
+            </form>
+            <h3 class="ui header">Upload Progress</h3>
+            <div class="ui progress" id="upload-progress">
+              <div class="bar">
+                <div class="progress"></div>
+              </div>
+              <div class="label">Parsing CSV File...</div>
+            </div>
+            <div class="ui horizontal segments" id="progress-msgs">
+              <div class="ui segment">
+                <h5 class="ui header green">Success Messages</h5>
+                <div class="ui list" id="status-success"></div>
+              </div>
+              <div class="ui segment">
+                <h5 class="ui header red">Error Messages</h5>
+                <div class="ui list" id="status-errors"></div>
+              </div>
+            </div>
+        </div>
+    </div>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      initializeUpload();
+    });
+  </script>
+{% endblock %}

@@ -1,0 +1,38 @@
+{
+  "name": "maps4all",
+  "description": "Simple way to create resource maps",
+  "scripts": {
+    "postdeploy": "python manage.py recreate_db && python manage.py setup_dev"
+  },
+  "env": {
+    "ADMIN_EMAIL": {
+      "required": true
+    },
+    "ADMIN_PASSWORD": {
+      "required": true
+    },
+    "FLASK_CONFIG": {
+      "value": "production"
+    },
+    "SECRET_KEY": {
+      "generator": "secret"
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    },
+    "worker": {
+      "quantity": 1
+    }
+  },
+  "addons": [
+    "heroku-postgresql",
+    "redistogo",
+    "filepicker",
+    "sendgrid"
+  ],
+  "buildpacks": [
+
+  ]
+}

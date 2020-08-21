@@ -1,0 +1,26 @@
+<head>
+    <meta name="charset" content="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block page_title %}{{ site_name }}{% endblock %}</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,700" rel="stylesheet">
+    {% assets 'vendor_css' %}<link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}">{% endassets %}
+    {% assets 'app_css' %}<link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}">{% endassets %}
+
+    <!-- custom stylesheet for stylesheet uploads -->
+    <link rel="stylesheet" type="text/css" href="{{ style_sheet }}">
+
+    <!-- for google maps -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAhkKJDnPxq0_xvF6pLAFcKfVAL6GbARBs&libraries=places"></script>
+
+    <!-- for file uploads -->
+    <script src="https://static.filestackapi.com/v3/filestack.js"></script>
+
+    {% assets 'vendor_js' %}<script type="text/javascript" src="{{ ASSET_URL }}"></script>{% endassets %}
+    {% assets 'app_js' %}<script type="text/javascript" src="{{ ASSET_URL }}"></script>{% endassets %}
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Fjalla+One|Francois+One|Martel+Sans:900|Montserrat:900|Ruda|Vesper+Libre:900|Work+Sans:900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Catamaran:300|Quicksand|Raleway:300|Work+Sans:300" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/components/icon.min.css" rel="stylesheet">
+</head>

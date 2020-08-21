@@ -1,0 +1,73 @@
+$accent-color: #000000;
+$accent-color-light: #505050;
+$accent-color-grey: #EEEEEE;
+$accent-color-dark-grey: #555;
+$secondary-color: #27ae60;
+$secondary-color-light: #2ecc71;
+$subheader-color: #AAAAAA;
+$font-choice: 'Nunito Sans', sans-serif;
+$transform: translate(-50%,0%);
+
+// About page
+.updated-alert, .ui.button.cancel-edit, .ui.button.end-edit {
+  display: none;
+}
+
+.cke_editable {
+  padding: .5em;
+}
+
+.editor-admin {
+  min-height: 100px;
+  word-wrap: break-word;
+}
+
+#admin-home {
+  font-family: $font-choice;
+  left: 50%;
+  margin-bottom: 50px;
+  position: absolute;
+  top: 75px;
+  transform: $transform;
+  -ms-transform: $transform;
+  -webkit-transform: $transform;
+}
+
+// CSV Upload
+#upload-progress {
+  display: none;
+}
+
+#progress-msgs .ui.segment {
+  max-height: 175px;
+  overflow-y: scroll;
+}
+
+// Admin pages
+.ui.stackable.grid.container {
+  .ui.header:first-child {
+    margin-top: 0.7em;
+  }
+
+  .ui.padded.segment {
+    .ui.header:first-child {
+      margin-top: 0;
+    }
+  }
+}
+
+.ui.text.container {
+  .ui.dividing.header, .ui.centered.header {
+    margin-top: 2.5em;
+  }
+}
+
+#suggest-resource {
+  .ui.dividing.header, .ui.centered.header {
+    margin-top: 0.5em;
+  }
+}
+
+#search-descriptors, #search-resources-text, #search-users {
+  font-family: $font-choice;
+}
