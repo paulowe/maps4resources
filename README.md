@@ -8,7 +8,7 @@
 
 ## Synopsis
 
-A Flask application for displaying location-based open education resources on a map. The resources used to insantiate the map are based on environmental scan conducted by two junior research assistants working on a FSL platform for promoting bilungualism and 21st century competencies.
+A Flask application for displaying location-based open education resources using google maps API. The resources used to insantiate the map are based on environmental scan conducted by two junior research assistants working on a FSL platform for promoting bilungualism and 21st century competencies.
 
 ## Setting up
 
