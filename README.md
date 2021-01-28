@@ -36,12 +36,22 @@ $ xcode-select --install
 ##### Install the dependencies
 
 ```
+//if you get the following errors:
+//ERROR: Could not find a version that satisfies the requirement psycopg==2.7
+//ERROR: No matching distribution found for psycopg==2.7
+//ERROR: Could not find a version that satisfies the requirement 
+//ERROR: No matching distribution found for requirements==0.1
+//open requirements and delete the following lines
+//psycopg==2.7
+//requirements==0.1
 $ pip install -r requirements.txt
 ```
 
 ##### Other dependencies for running locally
 
 You need to install [Foreman](https://ddollar.github.io/foreman/) and [Redis](http://redis.io/). Chances are, these commands will work:
+
+To use gem in Windows you would have to download Ruby: https://rubyinstaller.org/downloads/ and devkit https://github.com/oneclick/rubyinstaller/wiki/Development-Kit
 
 ```
 $ gem install foreman
