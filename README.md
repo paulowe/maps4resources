@@ -26,7 +26,7 @@ $ cd maps4resources
 ```
 $ pip install virtualenv
 $ virtualenv -p python3 venv
-$ source venv/bin/activate
+$ source venv/bin/activate     or    venv/scripts/activate
 ```
 (If you're on a mac) Make sure xcode tools are installed
 ```
@@ -126,7 +126,7 @@ $ python manage.py add_fake_data
 ## Running the app
 
 ```
-$ source venv/bin/activate
+$ source venv/bin/activate     or    venv/scripts/activate
 $ honcho start -f Local
 ```
 Then navigate to `http://localhost:5000` on your preferred browser to open the web app.
