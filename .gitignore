@@ -7008,3 +7008,16 @@ venv/lib/python3.7/site-packages/yolk/setuptools_support.py
 venv/lib/python3.7/site-packages/yolk/utils.py
 venv/lib/python3.7/site-packages/yolk/yolklib.py
 venv/pyvenv.cfg
+.env
+venv/.DS_Store
+venv/bin/.DS_Store
+venv/lib/python3.7/site-packages/twilio/rest/voice/v1/dialing_permissions/.DS_Store
+app/static/styles/.DS_Store
+app/static/.DS_Store
+app/assets/.DS_Store
+app/.DS_Store
+.DS_Store
+app/.DS_Store
+app/static/.DS_Store
+app/.DS_Store
+app/static/.DS_Store
