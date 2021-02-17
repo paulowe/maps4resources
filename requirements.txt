@@ -22,6 +22,7 @@ Flask-Migrate==2.5.3
 Flask-RQ==0.2
 Flask-Script==2.0.6
 Flask-SQLAlchemy==2.4.1
+Flask-SSLify==0.1.5
 Flask-WTF==0.14.3
 future==0.18.2
 geocoder==1.38.1
