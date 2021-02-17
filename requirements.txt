@@ -35,8 +35,8 @@ jmespath==0.9.5
 Mako==1.1.2
 MarkupSafe==1.1.1
 module==0.0.4
+psycopg2==2.8.6
 PyJWT==1.7.1
-psycopg2==2.7
 python-dateutil==2.8.1
 python-dotenv==0.13.0
 python-editor==1.0.4
