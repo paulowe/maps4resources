@@ -33,6 +33,7 @@ idna==2.9
 itsdangerous==1.1.0
 Jinja2==2.11.2
 jmespath==0.9.5
+jsmin==2.2.2
 Mako==1.1.2
 MarkupSafe==1.1.1
 module==0.0.4
