@@ -48,6 +48,8 @@ function markerListener(marker, event) {
     name: marker.title,
     address: marker.address,
     avg_rating: marker.avg_rating,
+    //Paul added hyperlink to marker bubble
+    hyperlink: marker.hyperlink,
     responsive: isResponsive,
   };
   var markerInfo = compiledMarkerInfoWindowTemplate(context);
@@ -72,8 +74,13 @@ function markerListener(marker, event) {
   }
 
   // Marker "more information" link to detailed resource information view
-  $(".more-info").click(function() {
-    displayDetailedResourceView(marker);
+  //Paul: InfoWindoe is not immediately attached to the DOM. When it is, the
+  // following event fires, so we attach inside it.
+  //-----------------------------------------------------------------------------
+  google.maps.event.addListener(infowindow, 'domready', function(){
+    $(".more-info").click(function() {
+      displayDetailedResourceView(marker);
+    });
   });
 }
 
@@ -138,6 +145,7 @@ function displayDetailedResourceView(marker) {
       descriptors: descriptors,
       avg_rating: marker.avg_rating,
       requiredOpts: marker.requiredOpts,
+      hyperlink: marker.hyperlink, //Paul added
     };
     var resourceInfo = compiledResourceTemplate(context);
     $("#resource-info").html(resourceInfo);
