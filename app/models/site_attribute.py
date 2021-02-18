@@ -15,7 +15,7 @@ class SiteAttribute(db.Model):
             if attr in os.environ:
                 attribute.value = os.environ[attr]
             elif attr == "ORG_NAME":
-                attribute.value = "Maps4All"
+                attribute.value = "GNL @ YorkU"
             elif attr == "SITE_COLOR":
                 attribute.value = "000000"
             else:

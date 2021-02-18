@@ -1,5 +1,5 @@
 {
-  "name": "maps4all",
+  "name": "GNL @ YorkU",
   "description": "Simple way to create resource maps",
   "scripts": {
     "postdeploy": "python manage.py recreate_db && python manage.py setup_dev"

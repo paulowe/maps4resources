@@ -269,7 +269,7 @@ class Resource(db.Model):
                         nb_words=10), descriptor=tdescriptor)
                     resource.text_descriptors.append(ta)
                 ha = HyperlinkAssociation(
-                    url='http://maps4all.org', descriptor=hyperlink_website)
+                    url='http://paulowe.com', descriptor=hyperlink_website)
                 resource.hyperlink_descriptors.append(ha)
 
                 db.session.add(resource)

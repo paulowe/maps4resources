@@ -1,5 +1,5 @@
 // This JS file is for the map and list view creations on the homepage of the
-// Maps4All site for the user. This example requires the Places library. Include
+// GNL @ YorkU site for the user. This example requires the Places library. Include
 // the libraries=places parameter when you first load the API. For example:
 // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
 
