@@ -19,7 +19,7 @@ class Config:
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD') or os.environ.get('SENDGRID_PASSWORD')
 
     ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL')
-    EMAIL_SUBJECT_PREFIX = '[{}]'.format(APP_NAME)
+    EMAIL_SUBJECT_PREFIX = '[GNL @ YorkU]'
     EMAIL_SENDER = os.environ.get('EMAIL_SENDER')
 
     REDIS_URL = os.getenv('REDISTOGO_URL') or 'http://localhost:6379'
