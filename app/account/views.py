@@ -266,7 +266,7 @@ def join_from_invite(user_id, token):
 @account.before_app_request
 def before_request():
     """Force user to confirm email before accessing login-required routes."""
-    if current_user.is_authenticated() \
+    if current_user.is_authenticated \
             and not current_user.confirmed \
             and request.endpoint[:8] != 'account.' \
             and request.endpoint != 'static':
