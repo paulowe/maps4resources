@@ -5,7 +5,6 @@
 ## Team Members
 
 - Paul Owe
-- Reem Aleithan
 - Johnny Kang
 
 ## Synopsis
