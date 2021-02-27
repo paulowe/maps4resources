@@ -72,7 +72,8 @@ def index():
 
 @main.route('/get-resources')
 def get_resources():
-    resources = Resource.query.all()
+    # Query resources and display them alphabetically -> Paul Owe
+    resources = Resource.query.order_by(Resource.name).all()
     resources_as_dicts = Resource.get_resources_as_dicts(resources)
     return json.dumps(resources_as_dicts)
 
