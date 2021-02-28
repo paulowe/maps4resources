@@ -8,5 +8,27 @@ This is a branch created from master. It is specifically for making changes to t
 
 Feel free to submit PRs and contirbute your changes.
 
+### Submap (Locale)
+A Locale is another map and a set of pins in that map. These pins are maintained by a University that is using our project. 
+
+Each locale has a URL under aif-mvp.herokuapp.com/X where X is the name of the locale. 
+
+For example, "EECS 3421" can be a locale in which a professor can collaborate with his/her students to create a set of pins. Similarly, another locale can be a separate class "Y" which also has its own set of pins.
+
+### Main map
+
+To visualize how each university/class is using our map. We will create a main map. This map is responsible for showing all locales and uses the name "all-maps" so its URL is aif-mvp.herokuapp.com/all-maps. 
+
+As an admin of the site, you can create or remove locales.
+
+### Proposed changes
+
+Create a 'locale / submap' database table to store records of each submap
+Create specific subdomain url links for each locale
+Create one-to-many relationships between a locale and resources
+Update each locale path to display its own set of resources (changes to how you query the database)
+Ondelete -> we should cascade delete all pins related to the locale
+Create new account role to manage locales
+
 ## License
 [MIT License](LICENSE.md)
