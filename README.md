@@ -26,7 +26,7 @@ $ cd maps4resources
 ```
 $ pip install virtualenv
 $ virtualenv -p python3 venv
-$ source venv/bin/activate     or    venv/scripts/activate
+$ source venv/bin/activate (Mac)    or    venv/scripts/activate (Windows)
 ```
 (If you're on a mac) Make sure xcode tools are installed
 ```
@@ -34,16 +34,7 @@ $ xcode-select --install
 ```
 
 ##### Install the dependencies
-
 ```
-//if you get the following errors:
-//ERROR: Could not find a version that satisfies the requirement psycopg==2.7
-//ERROR: No matching distribution found for psycopg==2.7
-//ERROR: Could not find a version that satisfies the requirement 
-//ERROR: No matching distribution found for requirements==0.1
-//open requirements and delete the following lines
-//psycopg==2.7
-//requirements==0.1
 $ pip install -r requirements.txt
 ```
 
