@@ -23,12 +23,17 @@ As an admin of the site, you can create or remove locales.
 
 ### Proposed changes
 
-Create a 'locale / submap' database table to store records of each submap
-Create specific subdomain url links for each locale
-Create one-to-many relationships between a locale and resources
-Update each locale path to display its own set of resources (changes to how you query the database)
-Ondelete -> we should cascade delete all pins related to the locale
-Create new account role to manage locales
+-> Create a 'locale / submap' database table to store records of each submap
+
+-> Create specific subdomain url links for each locale
+
+-> Create one-to-many relationships between a locale and resources
+
+-> Update each locale path to display its own set of resources (changes to how you query the database)
+
+-> Ondelete -> we should cascade delete all pins related to the locale
+
+-> Create new account role to manage locales
 
 ## License
 [MIT License](LICENSE.md)
