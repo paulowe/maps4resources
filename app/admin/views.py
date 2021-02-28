@@ -1,4 +1,5 @@
 import os
+import sys
 import datetime
 from flask import (
     abort,
@@ -17,7 +18,7 @@ from sqlalchemy.exc import IntegrityError
 from . import admin
 from .. import db
 from ..decorators import admin_required
-from ..models import Role, User, Rating, Resource, EditableHTML, SiteAttribute
+from ..models import Role, User, Rating, Resource, EditableHTML, SiteAttribute, Locale
 from .forms import (
     ChangeAccountTypeForm,
     ChangeUserEmailForm,
@@ -31,7 +32,7 @@ from .forms import (
     ChangeSiteColorForm
 )
 from ..email import send_email
-from ..utils import s3_upload
+from ..utils import s3_upload, tlf
 
 
 @admin.route('/')
@@ -358,6 +359,29 @@ def change_site_style():
     return render_template('admin/customize_site.html',
                            app_name=SiteAttribute.get_value("ORG_NAME"))
 
+'''
+@paulowe : add funcitonality to add javascript to site
+'''
+@admin.route('/customize-site/script', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def add_javascript():
+    """Add to a site's javascript."""
+    if request.method == 'POST':
+        script_attr = SiteAttribute.get("EXTRA_SCRIPT")
+
+        url = request.form['url']
+        script_attr.value = url
+
+        db.session.add(script_attr)
+        db.session.commit()
+
+        flash('Custom javascript successfully uploaded or replaced.')
+
+        return redirect(url_for('admin.customize_site'))
+
+    return render_template('admin/customize_site.html', app_name=SiteAttribute.get_value("ORG_NAME"))
+
 
 @admin.route('/customize-site/twilio', methods=['GET', 'POST'])
 @login_required
@@ -377,6 +401,31 @@ def change_twilio_credentials():
         db.session.commit()
         flash('Twilio credentials successfully updated.', 'form-success')
     return render_template('admin/customize_site.html', app_name=SiteAttribute.get_value("ORG_NAME"), form=form)
+
+'''
+@paulowe : adding admin route to specific locale subdomains
+'''
+@admin.route('/<tlfCmd>/<string:locale_subdom>', methods =['GET'])
+def admin_locale(tlfCmd, locale_subdom):
+
+    if current_user.is_admin():
+        if tlfCmd.upper() == "DELETE":
+            if Locale.remove_locale(locale_subdom):
+                flash('Locale successfully deleted.', 'success')
+            else:
+                flash(locale_subdom+' not found.', 'error')
+        elif tlfCmd.upper() == "CREATE":
+            if Locale.add_locale(locale_subdom):
+                flash('Locale successfully added.', 'success')
+                return redirect("/"+locale_subdom, code=302)
+            else:
+                flash('Hmm... Something went wrong.  Maybe try again?', 'error')
+        else:
+            flash(tlfCmd+' is not supported.')
+    else:
+        abort(404)
+    return redirect("/all-maps/", code=302)
+
 
 @admin.route('/customize-site/welcome', methods=['GET', 'POST'])
 @login_required

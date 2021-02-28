@@ -4,7 +4,7 @@ from flask_login import current_user, login_required
 from flask import abort 
 import os
 
-SubDomain - 0
+SubDomain = 0
 
 class OptionAssociation(db.Model):
     """

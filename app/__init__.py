@@ -1,5 +1,5 @@
-import os
-from flask import Flask
+import os, sys
+from flask import Flask, g, abort
 from flask_mail import Mail
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
@@ -7,7 +7,7 @@ from flask_assets import Environment
 from flask_wtf import CsrfProtect
 from flask_compress import Compress
 from flask_rq import RQ
-
+from functools import wraps
 from config import config
 from .assets import app_css, app_js, vendor_css, vendor_js
 
@@ -23,6 +23,11 @@ login_manager = LoginManager()
 # fixed, switch protection mode back to 'strong'
 login_manager.session_protection = 'basic'
 login_manager.login_view = 'account.login'
+
+# write everything in the buffer to the terminal
+def pf(*args, **kwds):
+    print (*args, **kwds)
+    sys.stdout.flush()
 
 
 def create_app(config_name):
@@ -85,4 +90,17 @@ def create_app(config_name):
 
     from .contact import contact as contact_blueprint
     app.register_blueprint(contact_blueprint, url_prefix='/contact')
+
+    @app.before_request
+    def br():
+        from flask import request
+        g.tlf = request.path[1:].split('/',1)[0]
+    
+    @app.after_request
+    def ar(response):
+        # if not tlf(g.tlf)
+        pass #abort(404)
+        return response
     return app
+
+

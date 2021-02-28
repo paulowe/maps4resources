@@ -1,8 +1,10 @@
+import sys 
 from functools import wraps
 
-from flask import abort
+from flask import abort, Request
 from flask_login import current_user
 from .models import Permission
+from .utils import tlf 
 
 
 def permission_required(permission):
@@ -19,3 +21,14 @@ def permission_required(permission):
 
 def admin_required(f):
     return permission_required(Permission.ADMINISTER)(f)
+
+'''
+@paulowe : add funcction decorator to handle locales
+'''
+def handle_locale(f):
+    def hl(*args, **kwargs):
+        path = flask.request.path
+        print("Found the path", path)
+        sys.stdout.flush()
+    print ("Locale decorator added.")
+    sys.stdout.flush()
