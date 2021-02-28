@@ -9,19 +9,18 @@ This is a branch created from master. It is specifically for making enhancements
 Feel free to submit PRs and contirbute your changes.
 
 ### Submap (Locale)
-A Locale is another map and a set of pins in that map. These pins are maintained by a University that is using our project. 
+A Locale is another map and a set of pins in that map. These pins are maintained by a University/Classroom that is using our project. 
 
-Each locale has a URL under aif-mvp.herokuapp.com/X where X is the name of the locale. 
+Each locale will have a URL under aif-mvp.herokuapp.com/X where X is the name of the locale. 
 
-For example, "EECS 3421" can be a locale in which a professor can collaborate with his/her students to create a set of pins. Similarly, another locale can be a separate class "Y" which also has its own set of pins.
+For example, "aif-mvp.herokuapp.com/EECS3421" can be a locale in which a professor Manos Papagelis can collaborate with his/her students to create a set of pins used in their class. 
 
 ### Main map
-
-To visualize how each university/class is using our map. We will create a main map. This map is responsible for showing all locales and uses the name "all-maps" so its URL is aif-mvp.herokuapp.com/all-maps. 
+To visualize how each university/class is using our map. We will also create a main map. This map is responsible for showing all locales and uses the subdomain name "all-maps" so its URL will be aif-mvp.herokuapp.com/all-maps. 
 
 As an admin of the site, you can create or remove locales.
 
-### Proposed improvements/changes
+### Proposed improvements to current offering
 
 -> Create a 'locale / submap' database table to store records of each submap
 
@@ -33,7 +32,7 @@ As an admin of the site, you can create or remove locales.
 
 -> Ondelete -> we should cascade delete all pins related to the locale
 
--> Create new account role to manage locales
+-> Create new account type (manager) that has admin rights to manage their own locales, but not the entire map
 
 ## License
 [MIT License](LICENSE.md)
