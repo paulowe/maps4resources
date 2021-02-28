@@ -4,7 +4,7 @@
 
 ## About Sub Maps
 
-This is a branch created from master. It is specifically for making changes to the architecture of the resource map so that as an admin you can dynamically create sub-maps and generate new subdomains for each map. At the moment this is the main feature we are actively working on. All changes will eventually be merged back into master once we complete the feature.
+This is a branch created from master. It is specifically for making enhancements to the architecture of the resource map - [https://aif-mvp.herokuapp.com] so that as an admin you can dynamically create sub-maps also termed as 'locales' and generate new subdomains for each one. At the moment this is the main feature we are actively working on to improve our current offering. All changes from this branch will eventually be merged back into master once we complete the feature.
 
 Feel free to submit PRs and contirbute your changes.
 
@@ -21,7 +21,7 @@ To visualize how each university/class is using our map. We will create a main m
 
 As an admin of the site, you can create or remove locales.
 
-### Proposed changes
+### Proposed improvements/changes
 
 -> Create a 'locale / submap' database table to store records of each submap
 
