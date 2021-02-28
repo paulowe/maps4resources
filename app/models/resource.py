@@ -465,6 +465,30 @@ class Resource(db.Model):
             
             return Locale.check_locale(subdom)
 
+        @staticmethod
+        def remove_locale(locale_subdom):
+            '''
+            @paulowe : We need to check the top level folder to find
+            locale folder and delete it from our map
+            '''
+
+            locale_object = Locale.query.filter_by(subdomain=locale_subdom).first()
+            if locale_object is None:
+                return False #we did not find any locale object
+            else:
+
+                db.session.delete(locale_object)
+                try:
+                    db.session.commit() # commit transaction
+                    return True
+                except:
+                    db.session.rollback() # adhere to all/none atomic transaction principle 
+                    e = sys.exc_info()[0]
+            return False 
+
+        def __repr__(self):
+            return '<Locale \'%s\'>' % self.name()
+
 
 
 
