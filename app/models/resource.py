@@ -1,7 +1,10 @@
 from .. import db
 from .. models import Rating
+from flask_login import current_user, login_required
+from flask import abort 
 import os
 
+SubDomain - 0
 
 class OptionAssociation(db.Model):
     """
@@ -171,10 +174,22 @@ class Resource(db.Model):
     """
     __tablename__ = 'resources'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(500), index=True)
+    name = db.Column(db.String(500), index=True) #index name for fast queries EECS3421
+    locale_id = db.Column(db.Integer, db.ForeignKey('locales.id', ondelete='CASCADE')) # Added a new locale_id column that is a foreign key with Cascade integrity constraint OnDelete.
     address = db.Column(db.String(500))
     latitude = db.Column(db.Float)
     longitude = db.Column(db.Float)
+    locale = db.relationship(
+        'Locale',
+        back_populates='resources'
+    ) 
+    ''' Creating a relationship between resources table and locale table. 
+    The back_populates argument - Takes a string name for the current table. The above configuration 
+    establishes a collection of Locale (or submap) objects on the Resources called Resources.locales.
+    It also establishes a .resource attribute on Locales which will refer to the parent Resource object. 
+    
+    For more information -> https://docs.sqlalchemy.org/en/13/orm/relationship_api.html#sqlalchemy.orm.relationship.params.back_populates 
+    '''
     text_descriptors = db.relationship(
         'TextAssociation',
         back_populates='resource',
@@ -305,6 +320,10 @@ class Resource(db.Model):
             # set ratings
             res['avg_rating'] = resource.get_avg_ratings()
 
+            # Get URL
+            res['hyperlink'] = resource.get_link()
+            print("Hyperlink for {}: {}".format(resource.name, res['hyperlink']))
+
             if '_sa_instance_state' in res:
                 del res['_sa_instance_state']
             resources_as_dicts.append(res)
@@ -333,7 +352,7 @@ class Resource(db.Model):
 
     @staticmethod
     def print_resources():
-        resources = Resource.query.all()
+        resources = Resource.query.all().order_by(name)
         for resource in resources:
             print(resource)
             print(resource.address)
@@ -352,3 +371,46 @@ class Resource(db.Model):
         ratings = Rating.query.filter_by(resource_id=self.id).all()
         ratings.sort(key=lambda r: r.submission_time, reverse=True)
         return ratings
+
+    '''
+    @paulowe : helper method to get all links
+
+    '''
+
+    def get_link(self):
+        links = HyperlinkAssociation.query.filter_by(resource_id=self.id).all()
+        link = ""
+        if len(links)>0:
+            link = links[0].url
+            return link
+    
+    '''
+    @paulowe : 
+    create a new database table of Locales (or specific submap).
+    The idea is to create a record of new maps (which can have their own set of resources/pins)
+    '''
+
+    class Locale(db.Model):
+        ''' Each submap will have a row in this table '''
+        __tablename__ = 'locales'
+        id = db.Column(db.Integer, primary_key=True)
+        subdomain = db.Column(db.String)
+        university = db.Column(db.String(500), default="GNL @ York University")
+        manager = db.Column(db.String(500), default="GNL @ York University")
+        
+        '''
+        @paulowe : 
+
+        The default value of relationship.cascade is save-update, merge. 
+        The typical alternative setting for this parameter is either all or more commonly all, 
+        delete-orphan. The all symbol is a synonym for save-update, merge, refresh-expire, expunge, delete, 
+        and using it in conjunction with delete-orphan indicates that 
+        the child object should follow along with its parent in all cases, 
+        and be deleted once it is no longer associated with that parent.
+
+        For more information -> https://docs.sqlalchemy.org/en/13/orm/cascades.html
+
+        Here, I am using this cascade because it is used for one-to-many relationships. That is one locale-to-many-resources
+        '''
+        resources = db.relationship('Resource',
+        back_populates='locale', cascade='all, delete-orphan')
