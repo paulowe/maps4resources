@@ -1,6 +1,6 @@
-import os, json, boto3
-from flask import url_for
-from .models import EditableHTML, SiteAttribute
+import os, json, boto3, sys
+from flask import url_for, abort
+from .models import EditableHTML, SiteAttribute, Locale
 from werkzeug.utils import secure_filename
 from uuid import uuid4
 
@@ -23,6 +23,7 @@ def register_template_utils(app):
                     logo_url=SiteAttribute.get_value("SITE_LOGO"),
                     style_timestamp=SiteAttribute.get_value("STYLE_TIME"),
                     style_sheet=SiteAttribute.get_value("STYLE_SHEET"),
+                    extra_script=SiteAttribute.get_value("EXTRA_SCRIPT"),
                     site_color=SiteAttribute.get_value("SITE_COLOR"))
 
     app.add_template_global(index_for_role)
@@ -76,4 +77,15 @@ def s3_upload(source_file, acl='public-read'):
 
     return destination_filename
 
+'''
+@paulowe : check if subdomain top level folder exists and return it
+'''
 
+def tlf(sub_dom):
+    if sub_dom != None:
+        print ("Top level folder is",sub_dom)
+    sys.stdout.flush()
+    subdomain = Locale.set_subdomain(sub_dom)
+    print ("subdomain is",subdomain)
+    sys.stdout.flush()
+    return subdomain
