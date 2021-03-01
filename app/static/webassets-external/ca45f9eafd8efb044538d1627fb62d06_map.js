@@ -573,6 +573,7 @@ function populateListDiv() {
       name: markerToShow.title,
       address: markerToShow.address,
       avg_rating: markerToShow.avg_rating,
+      hyperlink: markerToShow.hyperlink,
       requiredOpts: markerToShow.requiredOpts,
     };
     listResources.push(listResource);

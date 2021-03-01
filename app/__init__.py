@@ -69,32 +69,39 @@ def create_app(config_name):
     app.register_blueprint(main_blueprint)
 
     from .account import account as account_blueprint
-    app.register_blueprint(account_blueprint, url_prefix='/account')
+    app.register_blueprint(account_blueprint)
 
     from .admin import admin as admin_blueprint
-    app.register_blueprint(admin_blueprint, url_prefix='/admin')
+    app.register_blueprint(admin_blueprint)
 
     from .bulk_resource import bulk_resource as bulk_resource_blueprint
-    app.register_blueprint(bulk_resource_blueprint,
-                           url_prefix='/bulk-resource')
+    app.register_blueprint(bulk_resource_blueprint)
 
     from .descriptor import descriptor as descriptor_blueprint
-    app.register_blueprint(descriptor_blueprint, url_prefix='/descriptor')
+    app.register_blueprint(descriptor_blueprint)
 
     from .single_resource import single_resource as single_resource_blueprint
-    app.register_blueprint(single_resource_blueprint,
-                           url_prefix='/single-resource')
+    app.register_blueprint(single_resource_blueprint)
 
     from .suggestion import suggestion as suggestion_blueprint
-    app.register_blueprint(suggestion_blueprint, url_prefix='/suggestion')
+    app.register_blueprint(suggestion_blueprint)
 
     from .contact import contact as contact_blueprint
-    app.register_blueprint(contact_blueprint, url_prefix='/contact')
+    app.register_blueprint(contact_blueprint)
 
+    
+    '''
+    @paulowe: Check paths
+    '''
+    
     @app.before_request
     def br():
         from flask import request
-        g.tlf = request.path[1:].split('/',1)[0]
+        g.tlf = request.path[1:].split('/',1)[0] 
+
+        from .models import Locale
+        Locale.check_locale(g.tlf)
+
     
     @app.after_request
     def ar(response):

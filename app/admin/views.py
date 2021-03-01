@@ -360,7 +360,8 @@ def change_site_style():
                            app_name=SiteAttribute.get_value("ORG_NAME"))
 
 '''
-@paulowe : add funcitonality to add javascript to site
+@paulowe : add admin that provides developers the
+funcitonality to add custom javascript to site
 '''
 @admin.route('/customize-site/script', methods=['GET', 'POST'])
 @login_required
@@ -403,9 +404,10 @@ def change_twilio_credentials():
     return render_template('admin/customize_site.html', app_name=SiteAttribute.get_value("ORG_NAME"), form=form)
 
 '''
-@paulowe : adding admin route to specific locale subdomains
+@paulowe : adding admin route to create and delete
+specific locale subdomains 
 '''
-@admin.route('/<tlfCmd>/<string:locale_subdom>', methods =['GET'])
+@admin.route('/<tlfCmd>/<string:locale_subdom>', methods=['GET'])
 def admin_locale(tlfCmd, locale_subdom):
 
     if current_user.is_admin():

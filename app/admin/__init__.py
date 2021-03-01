@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import Blueprint, g
 
 admin = Blueprint('admin', __name__, url_prefix='/<tlf>/admin')
 

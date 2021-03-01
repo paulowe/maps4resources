@@ -179,10 +179,8 @@ class Resource(db.Model):
     address = db.Column(db.String(500))
     latitude = db.Column(db.Float)
     longitude = db.Column(db.Float)
-    locale = db.relationship(
-        'Locale',
-        back_populates='resources'
-    ) 
+    locale = db.relationship('Locale', back_populates='resources')
+
     ''' Creating a relationship between resources table and locale table. 
     The back_populates argument - Takes a string name for the current table. The above configuration 
     establishes a collection of Locale (or submap) objects on the Resources called Resources.locales.
@@ -190,6 +188,7 @@ class Resource(db.Model):
     
     For more information -> https://docs.sqlalchemy.org/en/13/orm/relationship_api.html#sqlalchemy.orm.relationship.params.back_populates 
     '''
+
     text_descriptors = db.relationship(
         'TextAssociation',
         back_populates='resource',
@@ -390,104 +389,102 @@ class Resource(db.Model):
     The idea is to create a record of new maps (which can have their own set of resources/pins)
     '''
 
-    class Locale(db.Model):
-        ''' Each submap will have a row in this table '''
-        __tablename__ = 'locales'
-        id = db.Column(db.Integer, primary_key=True)
-        subdomain = db.Column(db.String)
-        university = db.Column(db.String(500), default="GNL @ York University")
-        manager = db.Column(db.String(500), default="GNL @ York University")
+class Locale(db.Model):
+    ''' Each submap will have a row in this table '''
+    __tablename__ = 'locales'
+    id = db.Column(db.Integer, primary_key=True)
+    subdomain = db.Column(db.String)
+    university = db.Column(db.String(500), default="GNL @ York University")
+    manager = db.Column(db.String(500), default="GNL @ York University")
+    
+    '''
+    @paulowe : 
+
+    The default value of relationship.cascade is save-update, merge. 
+    The typical alternative setting for this parameter is either all or more commonly all, 
+    delete-orphan. The all symbol is a synonym for save-update, merge, refresh-expire, expunge, delete, 
+    and using it in conjunction with delete-orphan indicates that 
+    the child object should follow along with its parent in all cases, 
+    and be deleted once it is no longer associated with that parent.
+
+    For more information -> https://docs.sqlalchemy.org/en/13/orm/cascades.html
+
+    Here, I am using this cascade because it is used for one-to-many relationships. That is one locale-to-many-resources
+    '''
+    resources = db.relationship('Resource', back_populates='locale', cascade='all, delete-orphan')
+    @staticmethod
+    def insert_allmaps():
+        '''
+        @paulowe : insert all maps will be used as the default map for our domain and it will be called when initializing db in manage.py
+        '''
+        main_locale = Locale.query.first()
+
+        if main_locale is None:
+            main_locale = Locale(subdomain = "")
+
+            db.session.add(main_locale) #add main locale to db
+            db.session.commit()
+
+    @staticmethod
+    def check_locale(subdom):
+        '''
+        @paulowe :
+
+        Check the subdomain portion of url link and determine when to return main map / when to return locale 
+        '''
+        if "." in subdom or subdom == "static" or subdom == 'all-maps':
+            return True
+        else:
+            return Locale.query.filter_by(subdomain=subdom).first()
+    
+    @staticmethod
+    def add_locale(subdom):
+
+        '''
+        @paulowe : given a subdomain name, this method creates new locale/submap for it
+
+        i'm adding retrictions so that only admin users can have the ability to create new submaps
         
         '''
-        @paulowe : 
+        #first query db to see if subdomain exists
+        subdomain = Locale.query.filter_by(subdomain=subdom).first()
+        
+        #create new subdomain only if results from ur query was none and the adder is an admin
+        if subdomain is None and current_user.is_admin():
+            subdomain = Locale(subdomain=subdom)
 
-        The default value of relationship.cascade is save-update, merge. 
-        The typical alternative setting for this parameter is either all or more commonly all, 
-        delete-orphan. The all symbol is a synonym for save-update, merge, refresh-expire, expunge, delete, 
-        and using it in conjunction with delete-orphan indicates that 
-        the child object should follow along with its parent in all cases, 
-        and be deleted once it is no longer associated with that parent.
-
-        For more information -> https://docs.sqlalchemy.org/en/13/orm/cascades.html
-
-        Here, I am using this cascade because it is used for one-to-many relationships. That is one locale-to-many-resources
-        '''
-        resources = db.relationship('Resource',
-        back_populates='locale', cascade='all, delete-orphan')
-
-        @staticmethod
-        def insert_allmaps():
-            '''
-            @paulowe : insert all maps will be used as the default map for our domain
-            '''
-            main_locale = Locale.query.first()
-
-            if main_locale is None:
-                main_locale = Locale(subdomain = "")
-
-                db.session.add(main_locale) #add main locale to db
+            db.session.add(subdomain) #add to database
+            try:
                 db.session.commit()
-
-        @staticmethod
-        def check_locale(subdom):
-            '''
-            @paulowe :
-
-            Check the subdomain portion of url link and determine when to return main map / when to return locale 
-            '''
-            if "." in subdom or subdom == 'all-maps':
-                return True
-            else:
-                return Locale.query.filter_by(subdomain=subdom).first()
+            except:
+                db.session.rollback() #adhere to ATOMIC transactions principle and rollback if theres an exception
+                e= sys.exc_info()[0]
         
-        @staticmethod
-        def add_locale(subdom):
+        return Locale.check_locale(subdom)
 
-            '''
-            @paulowe : given a subdomain name, this method creates new locale/submap for it
+    @staticmethod
+    def remove_locale(locale_subdom):
+        '''
+        @paulowe : We need to check the top level folder to find
+        locale folder and delete it from our map
+        '''
 
-            i'm adding retrictions so that only admin users can have the ability to create new submaps
-            
-            '''
-            #first query db to see if subdomain exists
-            subdomain = Locale.query.filter_by(subdomain=subdom).first()
-            
-            #create new subdomain only if results from ur query was none and the adder is an admin
-            if subdomain is None and current_user.is_admin():
-                subdomain = Locale(subdomain=subdom)
+        locale_object = Locale.query.filter_by(subdomain=locale_subdom).first()
+        if locale_object is None:
+            return False #we did not find any locale object
+        else:
 
-                db.session.add(subdomain) #add to database
-                try:
-                    db.session.commit()
-                except:
-                    db.session.rollback() #adhere to ATOMIC transactions principle and rollback if theres an exception
-                    e= sys.exc_info()[0]
-            
-            return Locale.check_locale(subdom)
+            db.session.delete(locale_object)
+            try:
+                db.session.commit() # commit transaction
+                return True
+            except:
+                db.session.rollback() # adhere to all/none atomic transaction principle 
+                e = sys.exc_info()[0]
+        return False 
 
-        @staticmethod
-        def remove_locale(locale_subdom):
-            '''
-            @paulowe : We need to check the top level folder to find
-            locale folder and delete it from our map
-            '''
-
-            locale_object = Locale.query.filter_by(subdomain=locale_subdom).first()
-            if locale_object is None:
-                return False #we did not find any locale object
-            else:
-
-                db.session.delete(locale_object)
-                try:
-                    db.session.commit() # commit transaction
-                    return True
-                except:
-                    db.session.rollback() # adhere to all/none atomic transaction principle 
-                    e = sys.exc_info()[0]
-            return False 
-
-        def __repr__(self):
-            return '<Locale \'%s\'>' % self.name()
+    def __repr__(self):
+        return '<Locale \'%s\'>' % self.name()
 
 
 
