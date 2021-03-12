@@ -21,6 +21,9 @@ class Role(db.Model):
     permissions = db.Column(db.Integer)
     users = db.relationship('User', backref='role', lazy='dynamic')
 
+    '''
+    @paulowe : add new account type manager
+    '''
     @staticmethod
     def insert_roles():
         roles = {
@@ -29,10 +32,6 @@ class Role(db.Model):
                 'moderator',
                 True
             ),
-
-            '''
-            @paulowe : add new account type manager
-            '''
             'Manager': (
                 Permission.MANAGE, 'manager', False
             ),
