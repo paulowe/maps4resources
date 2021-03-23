@@ -7553,3 +7553,5 @@ app/account/views.py
 app/account/__pycache__/views.cpython-37.pyc
 app/__pycache__/__init__.cpython-38.pyc
 .DS_Store
+app/.DS_Store
+.DS_Store
