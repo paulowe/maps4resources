@@ -469,3 +469,28 @@ def change_welcome_message():
         db.session.commit()
         flash('Welcome message successfully updated.', 'form-success')
     return render_template('admin/customize_site.html', app_name=SiteAttribute.get_value('ORG_NAME'), form=form)
+
+
+'''
+@paulowe : query database information about registered instances (Locales)
+of institutions and classes using our map
+'''
+
+@admin.route('/manage-instances')
+@admin.route('/instances')
+@login_required
+def manage_instances():
+    locales = Locale.query.all()
+    return render_template('admin/manage_instances.html', locales=locales)
+
+'''
+@admin.route('/users')
+@login_required
+def registered_users():
+    """View all registered users."""
+    users = User.query.all()
+    roles = Role.query.all()
+    return render_template('admin/registered_users.html', users=users,
+                           roles=roles)
+
+'''
