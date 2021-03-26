@@ -40,7 +40,7 @@ function markerListener(marker, event) {
     map.setZoom(17);
   }
 
-  // Show marker info bubble
+  // Show marker info bubble on the map
   var markerInfoWindowTemplate = $("#marker-info-window-template").html();
   var compiledMarkerInfoWindowTemplate =
     Handlebars.compile(markerInfoWindowTemplate);
@@ -74,7 +74,7 @@ function markerListener(marker, event) {
   }
 
   // Marker "more information" link to detailed resource information view
-  //Paul: InfoWindoe is not immediately attached to the DOM. When it is, the
+  //Paul: Infowindow is not immediately attached to the DOM. When it is, the
   // following event fires, so we attach inside it.
   //-----------------------------------------------------------------------------
   google.maps.event.addListener(infowindow, 'domready', function(){
@@ -141,6 +141,7 @@ function displayDetailedResourceView(marker) {
     var context = {
       name: marker.title,
       address: marker.address,
+      // @paul: ***suggestionUrl: '<locale>/suggestion/' + marker.resourceID, ?***
       suggestionUrl: 'suggestion/' + marker.resourceID,
       descriptors: descriptors,
       avg_rating: marker.avg_rating,
@@ -312,7 +313,13 @@ function initMap() {
   initCurrentLocationButton();
   setInitialZoom();
 
-  $.get('/get-resources').done(function(resourcesString) {
+  //@paul: read user inputted locale path and fetch resources related to this path
+  const url = new URL(window.location.href)
+  locale_path = url.pathname
+  console.log(locale_path)
+  //--@paul--
+  $.get(locale_path+'get-resources').done(function(resourcesString) {
+    //console.log(resourcesString)
     var resources = JSON.parse(resourcesString);
     if (resources && resources.length > 0) {
       populateMarkers(resources);
@@ -523,6 +530,7 @@ function resourceSearchRequest(endpoint) {
  */
 function populateMarkers(resources) {
   for (var i = 0; i < resources.length; i++) {
+    console.log("got here")
     createMarker(resources[i]);
   }
   var bounds = new google.maps.LatLngBounds();

@@ -16,9 +16,9 @@
 
             <div class="ui menu">
     
-                <div class="ui right search item">
+                <div class="ui left search item">
                     <div class="ui transparent icon input">
-                        <input id="search-users" type="text" placeholder="Search instances...">
+                        <input id="search-instances" type="text" placeholder="Search instances...">
                         <i class="search icon"></i>
                     </div>
                 </div>
@@ -53,7 +53,7 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#search-users').keyup(function () {
+            $('#search-instances').keyup(function () {
                 var searchText = $(this).val();
                 if (searchText.length > 0) {
                     $('tbody td:icontains(' + searchText + ')').addClass('positive');

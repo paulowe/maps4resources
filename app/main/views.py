@@ -17,6 +17,7 @@ from datetime import datetime
 
 
 @main.route('/')
+#@main.route('/all-maps')
 def index():
     # set descriptors
     req_opt_desc = RequiredOptionDescriptor.query.all()
@@ -72,13 +73,25 @@ def index():
     return resp
 
 
-@main.route('/get-resources')
+#@main.route('/get-resources')
+#Handle the type of data to fetch
+@main.route('get-resources')
 def get_resources():
-    # Query resources and display them alphabetically -> Paul Owe
-    resources = Resource.query.order_by(Resource.name).all()
+
+   # if locale:
+
+    #handle locale specific search
+    resources = Resource.query.all()
     resources_as_dicts = Resource.get_resources_as_dicts(resources)
     return json.dumps(resources_as_dicts)
-
+    '''
+    else:
+        # Query resources and display them alphabetically
+        resources = Resource.query.order_by(Resource.name).all()
+        resources_as_dicts = Resource.get_resources_as_dicts(resources)
+        return jsonify(resources_as_dicts)
+    
+    '''
 
 @main.route('/search-resources')
 def search_resources():
