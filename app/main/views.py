@@ -84,14 +84,14 @@ def get_resources():
     resources = Resource.query.all()
     resources_as_dicts = Resource.get_resources_as_dicts(resources)
     return json.dumps(resources_as_dicts)
-    '''
+    
     else:
         # Query resources and display them alphabetically
         resources = Resource.query.order_by(Resource.name).all()
         resources_as_dicts = Resource.get_resources_as_dicts(resources)
         return jsonify(resources_as_dicts)
     
-    '''
+    
 
 @main.route('/search-resources')
 def search_resources():
