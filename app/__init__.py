@@ -22,6 +22,7 @@ login_manager = LoginManager()
 # TODO: Ideally this should be strong, but that led to bugs. Once this is
 # fixed, switch protection mode back to 'strong'
 login_manager.session_protection = 'basic'
+# @Paul: This is the view that a non authenticated user will get redirected to
 login_manager.login_view = 'account.login'
 
 # write everything in the buffer to the terminal
@@ -35,7 +36,13 @@ def create_app(config_name):
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
 
-    # Set up extensions
+    #Set up extensions.
+    ''' 
+    @Paul: init_app(app) binds each instance of the respective 
+    application to the flask app. However, we do no need to specify
+    an application context while using things like db, mail, login_manager
+    since they are not bound to our application exclusively. 
+    '''
     mail.init_app(app)
     db.init_app(app)
     login_manager.init_app(app)
@@ -65,6 +72,7 @@ def create_app(config_name):
         SSLify(app)
 
     # Create app blueprints
+    # @Paul - blueprints allow us to set url prefixes for routes contained within the views file
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)
 

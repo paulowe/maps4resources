@@ -73,23 +73,22 @@ def index():
     return resp
 
 
-#@main.route('/get-resources')
+@main.route('/get-resources', methods=['GET', 'POST'])
 #Handle the type of data to fetch
-@main.route('get-resources')
+@main.route('/all-maps/get-resources', methods=['GET', 'POST'])
 def get_resources():
-
-   # if locale:
-
+    tlf = tlf=request.args.get('locale')
+    print(tlf, file=sys.stderr)
+    if tlf == 'all-maps':
     #handle locale specific search
-    resources = Resource.query.all()
-    resources_as_dicts = Resource.get_resources_as_dicts(resources)
-    return json.dumps(resources_as_dicts)
-    
-    else:
-        # Query resources and display them alphabetically
         resources = Resource.query.order_by(Resource.name).all()
         resources_as_dicts = Resource.get_resources_as_dicts(resources)
-        return jsonify(resources_as_dicts)
+        return json.dumps(resources_as_dicts)
+    else:
+        # Query resources and display them alphabetically
+        resources = Resource.query.all()
+        resources_as_dicts = Resource.get_resources_as_dicts(resources)
+        return json.dumps(resources_as_dicts)
     
     
 

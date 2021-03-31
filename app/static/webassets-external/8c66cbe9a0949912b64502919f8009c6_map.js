@@ -304,7 +304,8 @@ function initMap() {
   initCurrentLocationButton();
   setInitialZoom();
 
-  $.get('/'+locale_path+'/get-resources').done(function(resourcesString) {
+  $.get('/all-maps/get-resources').done(function(resourcesString, status) {
+    console.log(status)
     var resources = JSON.parse(resourcesString);
     if (resources && resources.length > 0) {
       populateMarkers(resources);

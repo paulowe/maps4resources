@@ -316,16 +316,33 @@ function initMap() {
   //@paul: read user inputted locale path and fetch resources related to this path
   const url = new URL(window.location.href)
   locale_path = url.pathname
-  console.log(locale_path)
+  locale_name = locale_path.slice(1, -1)
+  console.log(locale_name)
   //--@paul--
-  $.get(locale_path+'get-resources').done(function(resourcesString) {
-    //console.log(resourcesString)
+  
+  $.get(locale_path+'get-resources', {"locale": locale_name}).done(function(resourcesString, status) {
+    console.log(status)
     var resources = JSON.parse(resourcesString);
     if (resources && resources.length > 0) {
       populateMarkers(resources);
       populateListDiv();
     }
   });
+
+  // $.ajax({
+  //   type: "GET",
+  //   url: '/all-maps/get-resources',
+  //   data: {locale:locale_path},
+  //   dataType: "json",
+  //   success: function(resourcesString, status) {
+  //     console.log(status)
+  //     var resources = JSON.parse(resourcesString);
+  //     if (resources && resources.length > 0) {
+  //       populateMarkers(resources);
+  //       populateListDiv();
+  //     }
+  //   }
+  //   });
 }
 
 /*
