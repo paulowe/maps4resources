@@ -97,6 +97,12 @@ def create_app(config_name):
     from .contact import contact as contact_blueprint
     app.register_blueprint(contact_blueprint)
 
+    '''
+    Creating new flask app - trial 1
+    '''
+    from .map_instance import map_instance as map_instance_blueprint
+    app.register_blueprint(map_instance_blueprint)
+
     
     '''
     @paulowe: Check paths

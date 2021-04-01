@@ -77,7 +77,11 @@
                                         description='Options for customizing the site', icon='wizard icon') }}
                     {{ dashboard_option('Create Pages', 'admin.create_page',
                                         description='Add more pages to the website', icon='plus icon') }}
-                    {{ dashboard_option('Manage Classroom Instances', 'admin.manage_instances',
+
+                    {{ dashboard_option('Add Map Instances', 'map_instance.create_instance',
+                                        description='Create new class or institution map instances', icon='add circle icon') }} 
+
+                    {{ dashboard_option('Manage Map Instances', 'admin.manage_instances',
                                         description='Options for managing classes or institution map instances', icon='wizard icon') }}
                 </div>
             {% endif %}
