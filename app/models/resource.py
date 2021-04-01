@@ -396,6 +396,7 @@ class Locale(db.Model):
     subdomain = db.Column(db.String)
     university = db.Column(db.String(500), default="GNL @ York University")
     manager = db.Column(db.String(500), default="GNL @ York University")
+    address = db.Column(db.String(500))
     
     '''
     @paulowe : 
@@ -482,6 +483,29 @@ class Locale(db.Model):
                 db.session.rollback() # adhere to all/none atomic transaction principle 
                 e = sys.exc_info()[0]
         return False 
+
+    @staticmethod
+    def get_locales_as_dicts(locales):
+        
+        '''
+        Paul's method: Given an sql result set with locale rows, return them as dicts.
+        Mimics the function in resources class
+        '''
+        # req_opt_desc = RequiredOptionDescriptor.query.all()
+        # if req_opt_desc:
+        #     req_opt_desc = req_opt_desc[0]
+        #     req_opt_desc = Descriptor.query.filter_by(
+        #         id=req_opt_desc.descriptor_id
+        #     ).first()
+
+        locales_as_dicts = []
+        for locale in locales:
+            locs = locale.__dict__
+            if '_sa_instance_state' in locs:
+                del locs['_sa_instance_state']
+            locales_as_dicts.append(locs)
+        return locales_as_dicts
+
 
     def __repr__(self):
         return '<Locale \'%s\'>' % self.name()

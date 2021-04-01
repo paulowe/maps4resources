@@ -75,22 +75,28 @@ def index():
 
 @main.route('/get-resources', methods=['GET', 'POST'])
 #Handle the type of data to fetch
-@main.route('/all-maps/get-resources', methods=['GET', 'POST'])
+#@main.route('/all-maps/get-resources', methods=['GET', 'POST'])
 def get_resources():
-    tlf = tlf=request.args.get('locale')
+    tlf = request.args.get('locale')
     print(tlf, file=sys.stderr)
-    if tlf == 'all-maps':
-    #handle locale specific search
-        resources = Resource.query.filter_by(locale_id=1)
+    locale_res_query_object = Locale.check_locale(tlf)
+    if (locale_res_query_object == True) or ( locale_res_query_object == None):
+        #show all locales to select from
+        locales = Locale.query.order_by(Locale.university).all()
+        locales_as_dicts = Locale.get_locales_as_dicts(locales)
+        #locale_as_dict = locales.__dict__
+        print(locales_as_dicts, file=sys.stderr)
+        return json.dumps(locales_as_dicts)
+    else:
+        locale_as_dict= locale_res_query_object.__dict__
+        #print(locale_as_dict, file=sys.stderr)
+        #print(locale_as_dict["id"], file=sys.stderr)
+
+        resources = Resource.query.filter_by(locale_id = locale_as_dict["id"])
         #resources = Resource.query.order_by(Resource.name).all()
         resources_as_dicts = Resource.get_resources_as_dicts(resources)
+        print(resources_as_dicts, file=sys.stderr)
         return json.dumps(resources_as_dicts)
-    else:
-        # Query resources and display them alphabetically
-        resources = Resource.query.all()
-        resources_as_dicts = Resource.get_resources_as_dicts(resources)
-        return json.dumps(resources_as_dicts)
-    
     
 
 @main.route('/search-resources')
