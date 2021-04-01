@@ -324,6 +324,7 @@ function initMap() {
     console.log(status)
     var resources = JSON.parse(resourcesString);
     if (resources && resources.length > 0) {
+      console.log(resources)
       populateMarkers(resources);
       populateListDiv();
     }
