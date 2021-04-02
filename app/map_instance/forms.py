@@ -3,14 +3,27 @@ from wtforms.fields import FloatField, StringField, SubmitField
 from wtforms.validators import InputRequired, Length
 
 class SingleResourceForm(Form):
-    name = StringField('Name', validators=[
+    university = StringField('University Name', validators=[
         InputRequired(),
         Length(1, 500)
     ])
-    address = StringField('Address', validators=[
+    path = StringField('Instance Path', validators=[
         InputRequired(),
         Length(1, 500)
     ])
+    poc = StringField('Point of Contact (Full name)', validators=[
+        InputRequired(),
+        Length(1, 500)
+    ])
+    email = StringField('Point of Contact (Email)', validators=[
+        InputRequired(),
+        Length(1, 500)
+    ])
+    address = StringField('Locale Address', validators=[
+        InputRequired(),
+        Length(1, 500)
+    ])
+    
     latitude = FloatField('Latitude')
     longitude = FloatField('Longitude')
     submit = SubmitField('Save Resource')
