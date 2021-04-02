@@ -72,6 +72,7 @@ def search_resources():
 @map_instance.route('/create', methods=['GET', 'POST'])
 @login_required
 def create_instance():
+    '''
     """Add a resource."""
     descriptors = Descriptor.query.all()
     for descriptor in descriptors:
@@ -84,8 +85,11 @@ def create_instance():
             setattr(SingleResourceForm, descriptor.name, TextAreaField())
         else:
             setattr(SingleResourceForm, descriptor.name, StringField())
+
+       '''     
     form = SingleResourceForm()
     if form.validate_on_submit():
+        '''
         req_opt_desc = RequiredOptionDescriptor.query.all()
         if req_opt_desc:
             req_opt_desc = req_opt_desc[0]
@@ -97,6 +101,7 @@ def create_instance():
                     flash('Error: Must set required descriptor: {}'.format(
                         descriptor.name), 'form-error')
                     return render_template('map_instances/create_instance.html', form=form)
+        '''
         new_resource = Resource(name=form.name.data,
                                 address=form.address.data,
                                 latitude=form.latitude.data,

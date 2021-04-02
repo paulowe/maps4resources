@@ -1,6 +1,6 @@
 from flask_wtf import Form
 from wtforms.fields import FloatField, StringField, SubmitField
-from wtforms.validators import InputRequired, Length
+from wtforms.validators import InputRequired, Length, Email
 
 class SingleResourceForm(Form):
     university = StringField('University Name', validators=[
@@ -16,7 +16,7 @@ class SingleResourceForm(Form):
         Length(1, 500)
     ])
     email = StringField('Point of Contact (Email)', validators=[
-        InputRequired(),
+        Email(),
         Length(1, 500)
     ])
     address = StringField('Locale Address', validators=[
