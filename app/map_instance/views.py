@@ -96,7 +96,7 @@ def create_instance():
                 if not form[descriptor.name].data:
                     flash('Error: Must set required descriptor: {}'.format(
                         descriptor.name), 'form-error')
-                    return render_template('single_resource/create.html', form=form)
+                    return render_template('map_instances/create_instance.html', form=form)
         new_resource = Resource(name=form.name.data,
                                 address=form.address.data,
                                 latitude=form.latitude.data,
@@ -114,7 +114,7 @@ def create_instance():
             db.session.rollback()
             flash('Error: failed to save resource. Please try again.',
                   'form-error')
-    return render_template('single_resource/create.html', form=form)
+    return render_template('map_instances/create_instance.html', form=form)
 
 
 @map_instance.route('/<int:resource_id>', methods=['GET', 'POST'])
