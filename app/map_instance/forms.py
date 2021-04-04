@@ -19,7 +19,7 @@ class SingleResourceForm(Form):
         Email(),
         Length(1, 500)
     ])
-    address = StringField('Locale Address', validators=[
+    address = StringField('Campus Address', validators=[
         InputRequired(),
         Length(1, 500)
     ])
