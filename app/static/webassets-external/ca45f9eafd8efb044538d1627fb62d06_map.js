@@ -314,13 +314,14 @@ function initMap() {
   setInitialZoom();
 
   //@paul: read user inputted locale path and fetch resources related to this path
+  console.log('hello world')
   const url = new URL(window.location.href)
   locale_path = url.pathname
   locale_name = locale_path.slice(1, -1)
-  console.log(locale_name)
+  console.log(locale_path)
   //--@paul--
   
-  $.get(locale_path+'get-resources', {"locale": locale_name}).done(function(resourcesString, status) {
+  $.get('/get-resources', {"locale": locale_name}).done(function(resourcesString, status) {
     console.log(status)
     var resources = JSON.parse(resourcesString);
     if (resources && resources.length > 0) {

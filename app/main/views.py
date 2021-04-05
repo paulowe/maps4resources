@@ -72,7 +72,7 @@ def index():
     resp.set_cookie('first_time_user', 'False')
     return resp
 
-
+@main.route('/monterrey', methods=['GET', 'POST'])
 @main.route('/get-resources', methods=['GET', 'POST'])
 #Handle the type of data to fetch
 #@main.route('/all-maps/get-resources', methods=['GET', 'POST'])
