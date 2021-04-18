@@ -64,6 +64,7 @@
   <div class="twelve wide column" id="right-column">
     <div id="map"></div>
     <div id="map-footer"></div>
+    <!-- Resource information page (to be deleted/edited) -->
     <div id="resource-info"></div>
   </div>
 </div>
@@ -134,22 +135,32 @@
   </div>
 </script>
 
-<!-- Populate resource marker info-->
+<!-- Populate locale marker info
+     (include all metadata you want to be visible on your locale's map marker)
+     
+     Ideas: 1. Red/Green dots to indicate active/inactive locaes
+            2. Live count of resources in each locale
+     -->
 <script id="marker-info-window-template" type="text/x-handlebars-template">
   <div class="marker-info">
     <h3 class="ui header">
       {% raw %}{{ name }}{% endraw %}
       <div class="sub header">
         <div id="address-marker">{% raw %}{{ address }}{% endraw %}</div>
-        {% raw %}{{#if avg_rating}}{% endraw %}
+          
           <div class="ui label" id="avg_rating-marker">
             <i class="yellow star icon"></i>
-            {% raw %}{{ avg_rating }}{% endraw %}
+            20 resources
           </div>
-        {% raw %}{{/if}}{% endraw %}
-        <a class="more-info">
-          <div class="ui label" id="more-info-label">More Information</div>
-        </a>
+<br>
+<br>
+        <div>
+          <a class="more-info">
+            <div class="ui label" id="more-info-label">More Information</div>
+          </a>
+        </div>
+        <br>
+       
       </div>
     </h3>
     {% raw %}{{#if responsive}}{% endraw %}
