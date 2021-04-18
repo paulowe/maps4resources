@@ -317,8 +317,9 @@ function initMap() {
   
   const url = new URL(window.location.href)
   locale_path = url.pathname
+  locz = url.hostname
   locale_name = locale_path.slice(1, -1)
-  console.log(locale_path)
+  console.log(locz)
   //--@paul--
   
   $.get('/get-resources', {"locale": locale_name}).done(function(resourcesString, status) {

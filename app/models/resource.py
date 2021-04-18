@@ -433,6 +433,7 @@ class Locale(db.Model):
 
         Check the subdomain portion of url link and determine when to return main map / when to return locale 
         '''
+        print(subdom)
         if "." in subdom or subdom == "static" or subdom == 'all-maps':
             return True
         else:
