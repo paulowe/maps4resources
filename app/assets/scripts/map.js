@@ -319,7 +319,7 @@ function initMap() {
   locale_path = url.pathname
   locz = url.hostname
   locale_name = locale_path.slice(1, -1)
-  console.log(locz)
+  console.log(locale_name)
   //--@paul--
   
   $.get('/get-resources', {"locale": locale_name}).done(function(resourcesString, status) {

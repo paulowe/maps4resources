@@ -72,6 +72,62 @@ def index():
     resp.set_cookie('first_time_user', 'False')
     return resp
 
+@main.route('<locale>/')
+# This will be the route that returns locale specific data
+def index2(locale):
+    # set descriptors
+    req_opt_desc = RequiredOptionDescriptor.query.all()
+    req_opt_id = -1
+    if req_opt_desc:
+        req_opt_desc = req_opt_desc[0]
+        req_opt_desc = Descriptor.query.filter_by(
+            id=req_opt_desc.descriptor_id
+        ).first()
+        if req_opt_desc is not None:
+            req_opt_id = req_opt_desc.id
+    options = Descriptor.query.all()
+    options = [o for o in options if o.dtype == 'option' and o.id != req_opt_id]
+    options_dict = {}
+    for o in options:
+        options_dict[o.name] = o.values
+    req_options = {}
+    if req_opt_desc:
+        for val in req_opt_desc.values:
+            req_options[val] = False
+    # check if admin has set twilio authentication
+    twilio_auth = not SiteAttribute.get_value(
+        'TWILIO_AUTH_TOKEN') and not SiteAttribute.get_value('TWILIO_ACCOUNT_SID')
+    # modal attributes
+    attributes = [
+        'WELCOME_HEADER',
+        'WELCOME_CONTENT',
+        'WELCOME_ACTION',
+        'WELCOME_FOOTER',
+        'WELCOME_WEBSITE_TEXT',
+        'WELCOME_WEBSITE_URL',
+        'WELCOME_EMAIL',
+        'WELCOME_FACEBOOK_URL',
+        'WELCOME_TWITTER_URL',
+        'WELCOME_INSTAGRAM_URL',
+        'WELCOME_YOUTUBE_URL',
+    ]
+    modal_attributes = {}
+    for attr in attributes:
+        modal_attributes[attr] = SiteAttribute.get_value(attr) or ''
+    # check for first-time user to render welcome modal to
+    print(request.cookies.get('first_time_user'))
+    show_modal = request.cookies.get(
+        'first_time_user') != 'False' and SiteAttribute.get_value('HAS_WELCOME_MODAL') == 'Yes'
+    resp = make_response(render_template('main/locale_index.html',
+                                         options=options_dict,
+                                         req_options=req_options,
+                                         req_desc=req_opt_desc,
+                                         twilio_auth=twilio_auth,
+                                         show_modal=show_modal,
+                                         modal=modal_attributes))
+    resp.set_cookie('first_time_user', 'False')
+    return resp
+
 #@main.route('/monterrey', methods=['GET', 'POST'])
 @main.route('/get-resources', methods=['GET', 'POST'])
 #Handle the type of data to fetch
