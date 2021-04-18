@@ -314,7 +314,7 @@ function initMap() {
   setInitialZoom();
 
   //@paul: read user inputted locale path and fetch resources related to this path
-  console.log('hello world')
+  
   const url = new URL(window.location.href)
   locale_path = url.pathname
   locale_name = locale_path.slice(1, -1)
