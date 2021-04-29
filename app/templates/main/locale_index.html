@@ -185,6 +185,8 @@
   <div class="ui hidden divider"></div>
   <div class="descriptors">
     <h2 class="ui dividing header">Information</h2>
+    
+    <!--@Paul: Below is a list of descriptions for each locale-->
     <div class="ui list">
       {% raw %}{{#each descriptors}}{% endraw %}
         {% raw %}{{#if value}}{% endraw %}
@@ -251,6 +253,7 @@
 </script>
 
 <!-- Populate list view-->
+
 <script id="listview-template" type="text/x-handlebars-template">
   {% raw %}{{#each resource}}{% endraw %}
   <div class="item list-resource">

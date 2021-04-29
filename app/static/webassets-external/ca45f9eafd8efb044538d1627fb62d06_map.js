@@ -82,6 +82,12 @@ function markerListener(marker, event) {
       displayDetailedResourceView(marker);
     });
   });
+
+  google.maps.event.addListener(infowindow, 'domready', function(){
+    $(".locale-info").click(function() {
+      displayDetailedLocaleView(marker);
+    });
+  });
 }
 
 // Re-render html for descriptor values containing phone numbers
@@ -102,7 +108,121 @@ function displayPhoneNumbers(descriptors) {
 
 // Generate the detailed resource page view after clicking "more information"
 // on a marker
-function displayDetailedResourceView(marker) {
+// function displayDetailedResourceView(marker) {
+//   // get descriptor information as associations
+//   $.get('get-associations/' + marker.resourceID).done(function(associations) {
+
+//     $("#map").hide();
+//     $('#map-footer').hide();
+//     $("#resource-info").empty();
+//     $("#resource-info").show();
+
+//     var associationObject = JSON.parse(associations);
+//     var descriptors = [];
+//     for (var key in associationObject) {
+//       var value = associationObject[key]['value'];
+//       var type = associationObject[key]['type'];
+
+//       // Combine multiple option descriptor values
+//       if (Array.isArray(associationObject[key])) {
+//         value = Object.keys(value).map(function(key) {
+//           return value[key];
+//         });
+//         value = value.join(', ');
+//       }
+
+//       var descriptor = {
+//         key: key,
+//         value: value,
+//         hyperlink: type == 'Hyperlink'
+//       };
+//       descriptors.push(descriptor);
+//     }
+//     // Detailed resource information template generation
+//     Handlebars.registerHelper('concat', function(str1, str2) {
+//         return str1 + str2;
+//     });
+//     var resourceTemplate = $("#resource-template").html();
+//     var compiledResourceTemplate = Handlebars.compile(resourceTemplate);
+//     var context = {
+//       name: marker.title,
+//       address: marker.address,
+//       // @paul: ***suggestionUrl: '<locale>/suggestion/' + marker.resourceID, ?***
+//       suggestionUrl: 'suggestion/' + marker.resourceID,
+//       descriptors: descriptors,
+//       avg_rating: marker.avg_rating,
+//       requiredOpts: marker.requiredOpts,
+//       hyperlink: marker.hyperlink, //Paul added
+//     };
+//     var resourceInfo = compiledResourceTemplate(context);
+//     $("#resource-info").html(resourceInfo);
+//     displayPhoneNumbers(descriptors);
+
+//     // Set handlers and populate DOM elements from resource template
+//     // Can only reference elements in template after compilation
+//     $("#resource-info").scrollTop(0); // reset scroll on div to top
+//     $('#back-button').click(function() {
+//       $("#map").show();
+//       $("#resource-info").hide();
+
+//       if ($(window).width() <= singleColBreakpoint) {
+//         $('#map-footer').show();
+//       }
+//       resizeMapListGrid();
+//     });
+
+//     $('.ui.rating')
+//     .rating({
+//       initialRating: 0,
+//       maxRating: 5,
+//       onRate: function(value) {
+//         if (value !== 0){
+//           $('#submit-rating').removeClass('disabled').addClass('active');}
+//       }
+//     });
+
+//     $('#submit-rating').click(function(e) {
+//       e.preventDefault();
+//       var rating = $('#rating-input').rating('get rating');
+//       var review = $('#review').val();
+//       var id = marker.resourceID;
+//       submitReview(rating,review,id);
+//     });
+
+//     // Button to "send" a text to the number using twilio
+//     $('#text-save-submit').click(function(e){
+//       var number = $('#phone-number').val();
+//       var id = marker.resourceID;
+//       sendText(number,id);
+//     });
+
+//     $('#sms-success-close')
+//       .on('click', function() {
+//         $(this)
+//           .closest('.message')
+//           .transition('fade');
+//       });
+
+//     // Map for single resource on detailed resource info page
+//     var singleResourceMap = new google.maps.Map(
+//       document.getElementById('single-resource-map'),
+//       {
+//         center: marker.getPosition(),
+//         zoom: focusZoom,
+//         scrollwheel: false,
+//         draggable: false,
+//       }
+//     );
+//     var singleMarker = new google.maps.Marker({
+//       position: marker.getPosition(),
+//       map: singleResourceMap,
+//     });
+//   });
+// }
+
+// Generate the detailed locale page view after clicking "more information"
+// on a locale marker
+function displayDetailedLocaleView(marker) {
   // get descriptor information as associations
   $.get('get-associations/' + marker.resourceID).done(function(associations) {
 
@@ -142,11 +262,13 @@ function displayDetailedResourceView(marker) {
       name: marker.title,
       address: marker.address,
       // @paul: ***suggestionUrl: '<locale>/suggestion/' + marker.resourceID, ?***
-      suggestionUrl: 'suggestion/' + marker.resourceID,
+      suggestionUrl2: 'suggestion/' + marker.resourceID,
+      localeUrldemo: 'https://paulowe.com',
       descriptors: descriptors,
       avg_rating: marker.avg_rating,
       requiredOpts: marker.requiredOpts,
-      hyperlink: marker.hyperlink, //Paul added
+      //hyperlink: marker.hyperlink, //Paul added
+      hyperlink: "hype",
     };
     var resourceInfo = compiledResourceTemplate(context);
     $("#resource-info").html(resourceInfo);

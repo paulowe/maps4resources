@@ -213,6 +213,7 @@
       {% raw %}{{/each}}{% endraw %}
     </div>
   </div>
+  
   <div class="ui hidden divider"></div>
   <div class="actions">
     <h2 class="ui dividing header">Actions</h2>
@@ -255,9 +256,12 @@
         Thanks, your rating has been posted!
       </div>
     </div>
-    <a href="{% raw %}{{ suggestionUrl }}{% endraw %}">
-      Suggest an edit for this resource
+    <!--@Paul: Visit resource button-->
+    <a href="{% raw %}{{ suggestionUrl2 }}{% endraw %}">
+      try this  
     </a>
+
+    <button class="ui button">Go to locale!</button>
   </div>
 </script>
 
