@@ -7,7 +7,7 @@ from werkzeug.datastructures import Headers
 from werkzeug.wrappers import Response
 
 from .. import db
-from ..models import Descriptor, OptionAssociation, TextAssociation, HyperlinkAssociation, Resource, RequiredOptionDescriptor
+from ..models import Descriptor, OptionAssociation, TextAssociation, HyperlinkAssociation, Resource, RequiredOptionDescriptor, Locale
 from . import map_instance
 from .forms import SingleResourceForm
 
@@ -102,15 +102,20 @@ def create_instance():
                         descriptor.name), 'form-error')
                     return render_template('map_instances/create_instance.html', form=form)
         '''
-        new_resource = Resource(name=form.name.data,
+        new_map_instance = Locale(university=form.university.data,
+                                subdomain = form.subdomain.data,
+                                manager = form.manager.data,
+                                email = form.email.data,
                                 address=form.address.data,
                                 latitude=form.latitude.data,
                                 longitude=form.longitude.data)
-        db.session.add(new_resource)
-        save_associations(resource=new_resource,
+        db.session.add(new_map_instance)
+        '''
+        save_associations(resource=new_map_instance,
                           form=form,
                           descriptors=descriptors,
                           resource_existed=False)
+        '''
         try:
             db.session.commit()
             flash('Resource added', 'form-success')

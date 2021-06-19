@@ -7,11 +7,11 @@ class SingleResourceForm(Form):
         InputRequired(),
         Length(1, 500)
     ])
-    path = StringField('Instance Path', validators=[
+    subdomain = StringField('Instance Subdomain', validators=[
         InputRequired(),
         Length(1, 500)
     ])
-    poc = StringField('Point of Contact (Full name)', validators=[
+    manager = StringField('Manager or Point of Contact (Full name)', validators=[
         InputRequired(),
         Length(1, 500)
     ])

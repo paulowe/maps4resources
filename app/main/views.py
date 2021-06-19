@@ -133,7 +133,7 @@ def index2(locale):
 #Handle the type of data to fetch
 #@main.route('/all-maps/get-resources', methods=['GET', 'POST'])
 def get_resources():
-    tlf = request.args.get('locale')
+    tlf = request.args.get('locale') #retrieves the locale json passed from map.js
     print(tlf, file=sys.stderr)
     locale_res_query_object = Locale.check_locale(tlf)
     if (locale_res_query_object == True) or ( locale_res_query_object == None):
@@ -142,8 +142,11 @@ def get_resources():
         locales_as_dicts = Locale.get_locales_as_dicts(locales)
         #locale_as_dict = locales.__dict__
         print(locales_as_dicts, file=sys.stderr)
-        #return json.dumps(locales_as_dicts)
-        return json.dumps([{'manager': 'GNL @ York University', 'name': 'all-maps', 'id': 1, 'address': '4700 Keele St, North York, ON M3J 1P3', 'university': 'GNL @ York University', 'latitude':'37.429983', 'longitude':'-122.1640234'}, {'manager': 'GNL @ York University', 'name': 'monterrey', 'id': 2, 'address': 'Av. Eugenio Garza Sada 2501 Sur, Tecnológico, 64849 Monterrey, N.L., Mexico', 'university': 'GNL @ York University', 'latitude':'40.7129914', 'longitude':'-73.9877033'}])
+        for locale in locales_as_dicts:
+            locale['name'] = locale['university']
+        #print(locales_as_dicts, file=sys.stderr)
+        return json.dumps(locales_as_dicts)
+        #return json.dumps([{'manager': 'GNL @ York University', 'name': 'All MCaps', 'id': 1, 'address': '4700 Keele St, North York, ON M3J 1P3', 'university': 'GNL @ York University', 'latitude':'37.429983', 'longitude':'-122.1640234'}, {'manager': 'GNL @ York University', 'name': 'Monterrey', 'id': 2, 'address': 'Av. Eugenio Garza Sada 2501 Sur, Tecnológico, 64849 Monterrey, N.L., Mexico', 'university': 'GNL @ York University', 'latitude':'40.7129914', 'longitude':'-73.9877033'}])
     else:
         locale_as_dict= locale_res_query_object.__dict__
         #print(locale_as_dict, file=sys.stderr)

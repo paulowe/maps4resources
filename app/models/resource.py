@@ -393,10 +393,13 @@ class Locale(db.Model):
     ''' Each submap will have a row in this table '''
     __tablename__ = 'locales'
     id = db.Column(db.Integer, primary_key=True)
-    subdomain = db.Column(db.String)
-    university = db.Column(db.String(500), default="GNL @ York University")
-    manager = db.Column(db.String(500), default="GNL @ York University")
-    address = db.Column(db.String(500))
+    subdomain = db.Column(db.String, default="yorku")
+    university = db.Column(db.String(500), default="York University")
+    manager = db.Column(db.String(500), default="Academic Innovation Fund")
+    email = db.Column(db.String(500), default="gnl.aif@yorku.ca")
+    address = db.Column(db.String(500), default="4700 Keele St, North York, ON M3J 3S5")
+    latitude = db.Column(db.Float, default=43.7742707)
+    longitude = db.Column(db.Float, default=-79.4931323)
     
     '''
     @paulowe : 
