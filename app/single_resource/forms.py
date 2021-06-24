@@ -13,6 +13,10 @@ class SingleResourceForm(Form):
     ])
     latitude = FloatField('Latitude')
     longitude = FloatField('Longitude')
+    locale = StringField('Locale', validators=[
+        InputRequired(),
+        Length(1, 500)
+    ])
     submit = SubmitField('Save Resource')
 
     def validate(self):

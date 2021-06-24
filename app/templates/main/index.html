@@ -143,17 +143,12 @@
      -->
 <script id="marker-info-window-template" type="text/x-handlebars-template">
   <div class="marker-info">
+    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/652/ada-wide.jpeg" style="float:left; padding: 15px;"/>
+      
     <h3 class="ui header">
       {% raw %}{{ name }}{% endraw %}
       <div class="sub header">
         <div id="address-marker">{% raw %}{{ address }}{% endraw %}</div>
-          
-        <div class="ui label" id="avg_rating-marker">
-          <i class="yellow star icon"></i>
-          20 resources
-        </div>
-        <br>
-        <br>
         <div>
           <a class="locale-info">
             <div class="ui label" id="more-info-label">More Information</div>
