@@ -4,7 +4,7 @@
 
 ## About Sub Maps
 
-This is a branch created from master. It is specifically for making enhancements to the architecture of the resource map - [https://aif-mvp.herokuapp.com] so that as an admin you can dynamically create sub-maps also termed as 'locales' and generate new subdomains for each one. At the moment this is the main feature we are actively working on to improve our current offering. All changes from this branch will eventually be merged back into master once we complete the feature.
+This is a branch created from master. It is specifically for making enhancements to the architecture of the [resource map](https://aif-mvp.herokuapp.com) so that as an admin you can dynamically create sub-maps also termed as 'locales' and generate new subdomains for each one. At the moment this is the main feature we are actively working on to improve our current offering. All changes from this branch will eventually be merged back into master once we complete the feature.
 
 Feel free to submit PRs and contirbute your changes.
 
