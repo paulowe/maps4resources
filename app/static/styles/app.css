@@ -1,3 +1,17 @@
+/**
+Last updated : July 31, 2021
+By: Paul Owe
+
+
+Structure of file
+
+1. General (15)
+2. GENERAL MAP/LIST GRID STYLES (258)
+3. SEARCH STYLES (293)
+4. LIST STYLES (408)
+5. MAP STYLES (481)
+6. RESOURCE VIEW SPECIFIC STYLES (563)
+**/
 @media -sass-debug-info{filename{}line{font-family:\0000312}}
 .updated-alert, .ui.button.cancel-edit, .ui.button.end-edit {
   display: none;
