@@ -11,6 +11,7 @@ Structure of file
 4. LIST STYLES (408)
 5. MAP STYLES (481)
 6. RESOURCE VIEW SPECIFIC STYLES (563)
+7. Map Animation Styles (732)
 **/
 @media -sass-debug-info{filename{}line{font-family:\0000312}}
 .updated-alert, .ui.button.cancel-edit, .ui.button.end-edit {
@@ -726,4 +727,43 @@ h1.ui.header, h2.ui.header {
 @media -sass-debug-info{filename{}line{font-family:\0000339}}
 .static-page .ui.header {
   color: #000000;
+}
+
+/*************** Map Animation Styles ****************/
+
+/* the A tag */
+.album {
+  position: relative;
+  z-index: 5;
+  width: 250px;
+  vertical-align: top;
+  display:block; 
+}
+
+/* the images */
+.album img { 
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 0px solid #f3f3f3;
+  box-shadow: 1px 1px 2px #666;
+  width:70px;
+  height:70px;
+  display:block;
+  transition: all .3s ease-in-out;
+    
+}
+/* first image animation properties */
+.album:hover .photo1, .album:focus .photo1 {
+    transform: rotate(-6deg) translate(-100px, -3px) scale(1.1);
+}
+
+/* second image animation properties */
+.album:hover .photo2, .album:focus .photo2 {
+    ms-transform: rotate(0deg) translate(0, -3px) scale(1.1);
+}
+
+/* third image animation properties */
+.album:hover .photo3, .album:focus .photo3 {
+    transform: rotate(6deg) translate(100px, -3px) scale(1.1);
 }

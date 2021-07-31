@@ -345,3 +345,10 @@ def post_rating():
             db.session.add(rating)
             db.session.commit()
     return jsonify(status='success')
+'''
+Return s3 bucket urls for all locales 
+templates-main-index-147
+'''
+def locale_image_url():
+    image = "https://s3-us-west-2.amazonaws.com/s.cdpn.io/652/ada-wide.jpeg"
+    return image
