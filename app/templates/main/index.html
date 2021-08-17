@@ -205,6 +205,9 @@
   <div class="ui hidden divider"></div>
   <div class="actions">
     <h2 class="ui dividing header">Actions</h2>
+    <a href="{% raw %}{{ suggestionUrl }}{% endraw %}">
+      Submit a Partnership or Collaboration Request
+    </a>
     <div class="text-save">
       {% if twilio_auth %}
         <div class="ui form">
@@ -244,9 +247,6 @@
         Thanks, your rating has been posted!
       </div>
     </div>
-    <a href="{% raw %}{{ suggestionUrl }}{% endraw %}">
-      Suggest an edit for this resource
-    </a>
   </div>
 </script>
 

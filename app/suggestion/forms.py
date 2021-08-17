@@ -24,7 +24,7 @@ class SuggestionBasicForm(Form):
         InputRequired(),
         Length(1, 500)
     ])
-    suggestion_text = TextField('Suggestion', validators=[
+    suggestion_text = TextField('Message', validators=[
         InputRequired()
     ])
     submit = SubmitField('Submit')

@@ -50,11 +50,17 @@
         Pages
         <i class="dropdown icon"></i>
             <div class="menu">
+                
+                <a href="https://yorkinternational.yorku.ca/gnl/" class="item">About Us</a>
+                <a href="https://yorkinternational.yorku.ca/gnlforfaculty/" class="item">GNL Resources and FAQs</a>
+                <a href="https://yorkinternational.yorku.ca/gnl-resources-hub/" class="item">Faculty Toolkit: How to Get Started</a>
+                <!-- 
                 {% for p in 'yes' | pages %}
                   {% if p.page_name != 'Contact' %}
                       {{ page_dropdown_choice(p.page_name, p.editor_name, icon='book icon') }}
                   {% endif %}
                 {% endfor %}
+                -->
             </div>
     </div>
     {% if current_user.is_authenticated %}
@@ -98,7 +104,7 @@
         <a href="{{ url_for('account.manage') }}" class="item">Your Account</a>
         <a href="{{ url_for('account.logout') }}" class="item">Log out</a>
     {% else %}
-        <a href="{{ url_for('suggestion.suggest') }}" class="item">Suggest Resource</a>
+        <a href="{{ url_for('suggestion.suggest') }}" class="item">Partnership &amp; Collaborations</a>
         <a href="{{ url_for('account.login') }}" class="item">Log in</a>
     {% endif %}
 
@@ -178,7 +184,7 @@
         <a href="{{ url_for('account.manage') }}" class="item">Your Account</a>
         <a href="{{ url_for('account.logout') }}" class="item">Log out</a>
     {% else %}
-        <a href="{{ url_for('suggestion.suggest') }}" class="item">Suggest Resource</a>
+        <a href="{{ url_for('suggestion.suggest') }}" class="item">Partnership &amp; Collaborations</a>
         <a href="{{ url_for('account.login') }}" class="item">Log in</a>
     {% endif %}
 
