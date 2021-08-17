@@ -370,13 +370,13 @@ h1.ui.header, h2.ui.header {
 }
 .item.list-resource.list-selected .ui.header a, .item.list-resource.list-selected #resource-list-chevron a {
   /* #27ae60 */
-  color: #3ac2ef;
+  color: #000000;
 }
 .item.list-resource.list-selected #avg_rating.ui.label, .item.list-resource.list-selected #category.ui.label {
   /* #2ecc71 */
-  color: #3ac2ef;
+  color: #000000;
   /* #2ecc71 */
-  border: 1px solid #3ac2ef;
+  border: 1px solid #000000;
 }
 
 #resource-list-chevron {
@@ -404,7 +404,7 @@ h1.ui.header, h2.ui.header {
 }
 .marker-info #more-info-label {
   /* #27ae60 */
-  background-color: #3ac2ef;
+  background-color: #000000;
   color: white;
   cursor: pointer;
   font-weight: 600;
@@ -414,7 +414,7 @@ h1.ui.header, h2.ui.header {
 }
 .marker-info #more-info-label:hover {
   /* #2ecc71 */
-  background-color: #3ac2ef;
+  background-color: #000000;
 }
 
 #map div.gm-style-iw {
@@ -427,9 +427,9 @@ h1.ui.header, h2.ui.header {
 #avg_rating-marker {
   background-color: inherit;
   /* #2ecc71 */
-  border: 1px solid #3ac2ef;
+  border: 1px solid #000000;
   /* #2ecc71 */
-  color: #3ac2ef;
+  color: #000000;
   font-size: 11px;
   margin-right: 0px;
   position: relative;
