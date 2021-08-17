@@ -369,11 +369,14 @@ h1.ui.header, h2.ui.header {
   color: #505050;
 }
 .item.list-resource.list-selected .ui.header a, .item.list-resource.list-selected #resource-list-chevron a {
-  color: #27ae60;
+  /* #27ae60 */
+  color: #3ac2ef;
 }
 .item.list-resource.list-selected #avg_rating.ui.label, .item.list-resource.list-selected #category.ui.label {
-  color: #2ecc71;
-  border: 1px solid #2ecc71;
+  /* #2ecc71 */
+  color: #3ac2ef;
+  /* #2ecc71 */
+  border: 1px solid #3ac2ef;
 }
 
 #resource-list-chevron {
@@ -400,7 +403,8 @@ h1.ui.header, h2.ui.header {
   margin-bottom: 2px;
 }
 .marker-info #more-info-label {
-  background-color: #27ae60;
+  /* #27ae60 */
+  background-color: #3ac2ef;
   color: white;
   cursor: pointer;
   font-weight: 600;
@@ -409,7 +413,8 @@ h1.ui.header, h2.ui.header {
   text-decoration: none;
 }
 .marker-info #more-info-label:hover {
-  background-color: #2ecc71;
+  /* #2ecc71 */
+  background-color: #3ac2ef;
 }
 
 #map div.gm-style-iw {
@@ -421,8 +426,10 @@ h1.ui.header, h2.ui.header {
 
 #avg_rating-marker {
   background-color: inherit;
-  border: 1px solid #2ecc71;
-  color: #2ecc71;
+  /* #2ecc71 */
+  border: 1px solid #3ac2ef;
+  /* #2ecc71 */
+  color: #3ac2ef;
   font-size: 11px;
   margin-right: 0px;
   position: relative;
